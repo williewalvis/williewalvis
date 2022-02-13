@@ -8,7 +8,7 @@ const spotifyJson = editjsonfile("./spotify.json")
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const scopes = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-read-currently-playing']
-const redirectUri = 'http://localhost:' + process.env.PORT + '/spotify/setToken'
+const redirectUri = 'https://williewalvis.co.za/spotify/setToken'
 const state = 'musix'
 
 const app = express()
