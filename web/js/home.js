@@ -10,6 +10,7 @@ setInterval(() => {
                 let item = result.data.item
                 // take away name
                 await $('#animated-name').animate({ opacity: 0 }, 100)
+                await $('#motd').animate({ opacity: 0 }, 100)
                 if (currentSong_Name !== item.name) {
                     // new song started
                     $('#card-main').animate({ opacity: 0 }, 100)
@@ -38,6 +39,7 @@ setInterval(() => {
             } else {
                 await $('#card-main').animate({ opacity: 0 }, 100)
                 $('#animated-name').animate({ opacity: 1 }, 300)
+                $('#motd').animate({ opacity: 1 }, 300)
             }
         },
         error: function (error) {
