@@ -128,7 +128,9 @@ html, body {
     color: #ffffff;
     background: linear-gradient(to right, #4d4d4d 0, white 10%, #4d4d4d 20%);
     background-position: 0;
+    /* csslint ignore:start */
     -webkit-background-clip: text;
+    /* csslint ignore:end */
     -webkit-text-fill-color: transparent;
     animation: shine 3s infinite linear;
     animation-fill-mode: forwards;
