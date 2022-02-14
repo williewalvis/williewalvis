@@ -13,7 +13,7 @@ setInterval(() => {
                 await $('#motd').animate({ opacity: 0 }, 100)
                 if (currentSong_Name !== item.name) {
                     // new song started
-                    $('#card-main').animate({ opacity: 0 }, 100)
+                    $('#card-main').animate({ opacity: 0 }, 10)
                     // change image
                     $("#image_cover").attr("src", `${item.album.images[0].url}`)
                     // change song name and artist name
@@ -21,7 +21,7 @@ setInterval(() => {
                     // change spotify button uri
                     $("#spotify_uri").attr("href", `${item.uri}`)
                     // do some stuffs
-                    $('#card-main').animate({ opacity: 1 }, 100)
+                    $('#card-main').animate({ opacity: 1 }, 10)
                     // set name variable
                     currentSong_Name = item.name
                 } else {
