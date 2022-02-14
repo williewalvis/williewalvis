@@ -1,4 +1,4 @@
-function main() {
+$(document).ready(function () {
     function detectMob() {
         const toMatch = [
             /Android/i,
@@ -17,6 +17,4 @@ function main() {
         // then disable stuffs 
         $('#lines-animation').animate({ opacity: 0 }, 100)
     }
-}
-
-main()
+})
