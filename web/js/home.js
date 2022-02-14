@@ -2,8 +2,10 @@ setInterval(() => {
     $.ajax({
         url: "/spotify/getPlayState",
         type: "GET",
-        success: function (result) {
+        success: async function (result) {
             if (result.data.is_playing) {
+                // take away name
+                await $('#animated-name').animate({ opacity: 0 }, 300)
                 // change visibility
                 $('#card-main').animate({ opacity: 1 }, 300)
                 // reference data as variable
@@ -15,7 +17,8 @@ setInterval(() => {
                 // change spotify button uri
                 $("#spotify_uri").attr("href", `${item.uri}`)
             } else {
-                $('#card-main').animate({ opacity: 0 }, 300)
+                await $('#card-main').animate({ opacity: 0 }, 300)
+                $('#animated-name').animate({ opacity: 1 }, 300)
             }
         },
         error: function (error) {

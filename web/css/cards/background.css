@@ -37,15 +37,15 @@
 }
 
 .line:nth-child(1)::after {
-    animation-delay: 2s;
+    animation-delay: 1s;
 }
 
-.line:nth-child(3) {
+.line:nth-child(2) {
     margin-left: 25%;
 }
 
-.line:nth-child(3)::after {
-    animation-delay: 2.5s;
+.line:nth-child(2)::after {
+    animation-delay: 1.5s;
 }
 
 @keyframes drop {

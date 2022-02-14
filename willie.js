@@ -33,7 +33,7 @@ app.set("views", path.join(__dirname, "/web/html"))
 
 // web app homepage
 
-app.get('/', checkAuth,  async (req, res, next) => {
+app.get('/',  async (req, res, next) => {
     // render main page
     res.render("home.ejs")
     // end function 

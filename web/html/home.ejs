@@ -16,14 +16,16 @@
     <script src="https://unpkg.com/css-doodle@0.15.3/css-doodle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="/js/home.js"></script>
+    <script src="/js/mobileManager.js"></script>
 </head>
 
 <body>
-    <div class="lines">
-        <div class="line"></div>
+    <!-- BACKGROUND ANIMATION  -->
+    <div id="lines-animation" class="lines">
         <div class="line"></div>
         <div class="line"></div>
     </div>
+    <!-- SPOTIFY CARD -->
     <div id="card-main" class="card">
         <div class="card-header">
             <img src="/img/edit1.jpg" />
@@ -41,6 +43,10 @@
                 <img src="/img/spotify.png" />
             </a>
         </div>
+    </div>
+    <!-- MAIN TEXT BACKDROP -->
+    <div>
+        <a id="animated-name" href="https://www.instagram.com/williewalvis/" class="btn-shine" target="_blank">Wilmar Malherbe</a>
     </div>
 </body>
 
