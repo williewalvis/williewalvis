@@ -33,11 +33,17 @@ app.set("views", path.join(__dirname, "/web/html"))
 
 // web app homepage
 
-app.get('/',  async (req, res, next) => {
+app.get('/', async (req, res, next) => {
     // render main page
     res.render("home.ejs")
     // end function 
     return
+})
+
+// my own domain features
+
+app.get('/optog', async (req, res) => {
+    res.redirect("https://onedrive.live.com/?authkey=%21AN5ZXF%5FmsyG0eSs&cid=49F7CAFA372224F1&id=49F7CAFA372224F1%21166&parId=49F7CAFA372224F1%21165&o=OneUp")
 })
 
 // spotify based stuff
