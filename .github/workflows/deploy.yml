@@ -1,4 +1,4 @@
-name: Deploy WMalherbe
+name: Deploy WillieWalvis
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
   build:
   
-    runs-on: [self-hosted, main]
+    runs-on: self-hosted
         
     strategy: 
         matrix:
@@ -21,4 +21,4 @@ jobs:
             node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run build --if-present
-      - run: pm2 restart "wmalherbe_main"
+      - run: pm2 restart "williewalvis"
