@@ -31,6 +31,15 @@ app.use(express.static(path.join(__dirname, '/web')))
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/web/html"))
 
+// memhub lol
+
+app.get('/ethan', async (req, res) => {
+    // render main page
+    res.render("ethan.ejs")
+    // end function
+    return
+})  
+
 // web app homepage
 
 app.get('/', checkAuth, async (req, res, next) => {
