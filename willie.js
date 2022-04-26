@@ -36,7 +36,7 @@ app.set("views", path.join(__dirname, "/web/html"))
 app.get('/ethan', async (req, res) => {
     // render main page
     res.render("ethan.ejs")
-    // end function
+    // end what
     return
 })  
 
