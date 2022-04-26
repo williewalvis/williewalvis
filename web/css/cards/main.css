@@ -86,7 +86,7 @@ html, body {
     text-overflow: ellipsis;
     max-width: 220px;
     color: white;
-    text-shadow: -2px -2px 0 #171717, 2px -2px 0 #171717, -2px 2px 0 #171717, 2px 2px 0 #171717;
+    text-shadow: -1.1px -1.1px 0 #171717, 1.1px -1.1px 0 #171717, -1.1px 1.1px 0 #171717, 1.1px 1.1px 0 #171717;
 }
 
 .card-body img {
