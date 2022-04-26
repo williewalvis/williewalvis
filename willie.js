@@ -31,15 +31,6 @@ app.use(express.static(path.join(__dirname, '/web')))
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/web/html"))
 
-// memhub lol
-
-app.get('/ethan', async (req, res) => {
-    // render main page
-    res.render("ethan.ejs")
-    // end what
-    return
-})  
-
 // web app homepage
 
 app.get('/', checkAuth, async (req, res, next) => {
@@ -53,6 +44,15 @@ app.get('/', checkAuth, async (req, res, next) => {
 
 app.get('/optog', async (req, res) => {
     res.redirect("https://onedrive.live.com/?authkey=%21AN5ZXF%5FmsyG0eSs&cid=49F7CAFA372224F1&id=49F7CAFA372224F1%21166&parId=49F7CAFA372224F1%21165&o=OneUp")
+})
+
+// memhub lol
+
+app.get('/ethan', checkAuth, async (req, res) => {
+    // render main page
+    res.render("ethan.ejs")
+    // end what
+    return
 })
 
 // spotify based stuff
@@ -171,7 +171,9 @@ doSpot()
 
 function checkAuth(req, res, next) {
     if (!loggedIn) {
-        res.redirect("https://www.instagram.com/williewalvis/")
+        if (process.env.DEV !== "YES") {
+            res.redirect("https://www.instagram.com/williewalvis/")
+        }
     } else {
         next()
     }
