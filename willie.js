@@ -43,7 +43,7 @@ app.get('/', checkAuth, async (req, res, next) => {
 // my own domain features
 
 app.get('/optog', async (req, res) => {
-    res.redirect("https://onedrive.live.com/?authkey=%21AN5ZXF%5FmsyG0eSs&cid=49F7CAFA372224F1&id=49F7CAFA372224F1%21166&parId=49F7CAFA372224F1%21165&o=OneUp")
+    res.redirect("https://willieewalvis-my.sharepoint.com/:v:/g/personal/wilmar_malherbe_williewalvis_co_za/EZ4yHxa26B1JlqV9ZXSrDfsBXhgNVieB392gHibslflCVg?e=aPekJt")
 })
 
 // memhub lol
