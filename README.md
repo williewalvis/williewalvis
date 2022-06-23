@@ -2,8 +2,6 @@
 
 I dabble in the art of what is called "programming." Really don't enjoy it sometimes, but I just pop a monster and it's all good.
 
-[![GitHub stats](https://github-readme-stats.vercel.app/api?username=williewalvis&show_icons=true&layout=compact&theme=dark)](https://github.com/williewalvis)
-
 [![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=williewalvis&layout=compact&theme=dark)](https://github.com/williewalvis)
 
 
