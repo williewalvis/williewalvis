@@ -18,6 +18,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="/js/home.js"></script>
     <script src="/js/mobile.js"></script>
+    <!-- INTERNAL SCRIPTS -->
+    <script>
+        // define reload function
+        function autoRefresh() { window.location = window.location.href }
+        // set reload function to run
+        setInterval(autoRefresh(), 60000)
+    </script>
 </head>
 
 <body>
