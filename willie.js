@@ -50,9 +50,12 @@ app.get("/download/image", async (req, res) => {
     // check query
     if (req.query.id !== undefined) {
         // check specific query
-        if (req.query.id == "Music_Logo") {
+        if (req.query.id == "Music_Logo_Color") {
             // redirect
             res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/EUepPAXVpHxHrwrT5XVEM_MBMNn0-rgnJaFdDpspyVhWdA?e=fiYHwI")
+        } else if (req.query.id == "Music_Logo_White") {
+            // redirect
+            res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/Ed-zmQLUWUlFkGi8ytmrxBABa8427Ti-u2IXFflnEpvisQ?e=Ru1RDc")
         }
     }
 })
