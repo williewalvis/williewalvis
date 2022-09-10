@@ -46,6 +46,17 @@ app.get('/optog', async (req, res) => {
     res.redirect("https://willieewalvis-my.sharepoint.com/:v:/g/personal/wilmar_malherbe_williewalvis_co_za/EZ4yHxa26B1JlqV9ZXSrDfsBXhgNVieB392gHibslflCVg?e=aPekJt")
 })
 
+app.get("/download/image", async (req, res) => {
+    // check query
+    if (req.query.image !== undefined) {
+        // check specific query
+        if (req.query.image == "Music_Logo") {
+            // redirect
+            res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/EUepPAXVpHxHrwrT5XVEM_MBMNn0-rgnJaFdDpspyVhWdA?e=fiYHwI")
+        }
+    }
+})
+
 // memhub lol
 
 app.get('/ethan', checkAuth, async (req, res) => {
