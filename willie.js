@@ -48,9 +48,9 @@ app.get('/optog', async (req, res) => {
 
 app.get("/download/image", async (req, res) => {
     // check query
-    if (req.query.image !== undefined) {
+    if (req.query.id !== undefined) {
         // check specific query
-        if (req.query.image == "Music_Logo") {
+        if (req.query.id == "Music_Logo") {
             // redirect
             res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/EUepPAXVpHxHrwrT5XVEM_MBMNn0-rgnJaFdDpspyVhWdA?e=fiYHwI")
         }
