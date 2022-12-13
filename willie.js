@@ -202,3 +202,7 @@ app.use((req, res, next) => {
 // setup main web app
 
 app.listen(port, () => { console.log(`web online ${port}`) })
+
+// have daemon become calm  
+
+console.log("[PT_DAEMON] Done!")
