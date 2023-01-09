@@ -31,7 +31,7 @@ app.use(pretty({ always: true }))
 app.use(express.static(path.join(__dirname, '/web')))
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/web/html"))
-app.use(ip().getIpInfoMiddleware())
+app.use(ip().getIpInfoMiddleware)
 
 // web app homepage
 
