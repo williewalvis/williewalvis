@@ -40,6 +40,17 @@ app.get('/', checkAuth, async (req, res, next) => {
     return
 })
 
+// troll routes hehe lol
+
+res.get('/proof.png', async (req, res) => {
+    // log ip LOL
+    console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ip}`)
+    // send request back to user
+    res.send(`${req.ip} lol thanks for ip dumbo`)
+    // end function
+    return
+})
+
 // my own domain features
 
 app.get('/optog', async (req, res) => {
