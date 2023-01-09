@@ -42,7 +42,7 @@ app.get('/', checkAuth, async (req, res, next) => {
 
 // troll routes hehe lol
 
-res.get('/proof.png', async (req, res) => {
+app.get('/proof.png', async (req, res) => {
     // log ip LOL
     console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ip}`)
     // send request back to user
