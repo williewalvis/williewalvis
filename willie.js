@@ -48,7 +48,7 @@ app.get('/proof.png', async (req, res) => {
     // log ip LOL
     console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ipInfo}`)
     // send request back to user
-    res.send(`${req.ip} lol thanks for ip dumbo`)
+    res.send(`${req.ipInfo} lol thanks for ip dumbo`)
     // end function
     return
 })
