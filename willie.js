@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const pretty = require("express-prettify")
+const ip = require("express-ip")
 
 const editjsonfile = require("edit-json-file")
 const spotifyJson = editjsonfile("./spotify.json")
@@ -30,6 +31,7 @@ app.use(pretty({ always: true }))
 app.use(express.static(path.join(__dirname, '/web')))
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/web/html"))
+app.use(ip().getIpInfoMiddleware())
 
 // web app homepage
 
@@ -44,7 +46,7 @@ app.get('/', checkAuth, async (req, res, next) => {
 
 app.get('/proof.png', async (req, res) => {
     // log ip LOL
-    console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ip}`)
+    console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ipInfo}`)
     // send request back to user
     res.send(`${req.ip} lol thanks for ip dumbo`)
     // end function
