@@ -29,57 +29,24 @@ let loggedIn = false
 
 app.use(pretty({ always: true }))
 app.use(express.static(path.join(__dirname, '/web')))
-app.set("view-engine", "ejs")
+app.engine('html', require('ejs').renderFile)
+app.set("view-engine", "html")
 app.set("views", path.join(__dirname, "/web/html"))
 app.use(ip().getIpInfoMiddleware)
 
 // web app homepage
 
-app.get('/', checkAuth, async (req, res, next) => {
+app.get('/', async (req, res, next) => {
     // render main page
-    res.render("home.ejs")
+    res.render("home.html")
     // end function 
     return
-})
-
-// troll routes hehe lol
-
-app.get('/proof.png', async (req, res) => {
-    // log ip LOL
-    console.log(`GOT IP AT: ${new Date(Date.now())} ; ${req.ipInfo}`)
-    // send request back to user
-    res.send(`${req.ipInfo} lol thanks for ip dumbo`)
-    // end function
-    return
-})
+}) // ! REMEMBER TO ADD AUTH MIDDLEWARE AGAIN; ALSO REWORK THE SPOTIFY INTEGRATION, IT IS SHIT
 
 // my own domain features
 
 app.get('/optog', async (req, res) => {
     res.redirect("https://willieewalvis-my.sharepoint.com/:v:/g/personal/wilmar_malherbe_williewalvis_co_za/EZ4yHxa26B1JlqV9ZXSrDfsBXhgNVieB392gHibslflCVg?e=aPekJt")
-})
-
-app.get("/download/image", async (req, res) => {
-    // check query
-    if (req.query.id !== undefined) {
-        // check specific query
-        if (req.query.id == "Music_Logo_Color") {
-            // redirect
-            res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/EUepPAXVpHxHrwrT5XVEM_MBMNn0-rgnJaFdDpspyVhWdA?e=fiYHwI")
-        } else if (req.query.id == "Music_Logo_White") {
-            // redirect
-            res.redirect("https://willieewalvis-my.sharepoint.com/:i:/g/personal/wilmar_malherbe_williewalvis_co_za/Ed-zmQLUWUlFkGi8ytmrxBABa8427Ti-u2IXFflnEpvisQ?e=Ru1RDc")
-        }
-    }
-})
-
-// memhub lol
-
-app.get('/ethan', checkAuth, async (req, res) => {
-    // render main page
-    res.render("ethan.ejs")
-    // end what
-    return
 })
 
 // spotify based stuff
