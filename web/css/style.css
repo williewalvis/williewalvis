@@ -39,15 +39,15 @@ body {
 h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 7vw;
-  line-height: 1;
-  color: #1f2029;
+  font-size: 3vw;
+  /* line-height: 1; */
+  color: #fff;
   text-align: center;
-  -webkit-text-stroke: 2px #1f2029;
-  text-stroke: 2px #1f2029;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  color: transparent;
+  /* -webkit-text-stroke: 2px #1f2029; */
+  /* text-stroke: 2px #1f2029; */
+  -webkit-text-fill-color: #fff;
+  /* text-fill-color: transparent; */
+  /* color: #fff; */
 }
 
 [type="checkbox"]:checked,
@@ -336,9 +336,9 @@ h1 {
     font-size: 9vw;
     -webkit-text-stroke: 2px transparent;
     text-stroke: 2px transparent;
-    -webkit-text-fill-color: #1f2029;
-    text-fill-color: #1f2029;
-    color: #1f2029;
+    -webkit-text-fill-color: #fff;
+    text-fill-color: #fff;
+    color: #fff;
   }
 
   .nav ul li a {
@@ -685,10 +685,8 @@ body .easytransitions section .center {
   left: 0;
   margin: auto;
   width: 600px;
-  font-family: "Montserrat", sans-serif;
   right: 0;
   text-align: center;
-  color: white;
   top: 50%;
   transform: translateY(-50%);
 }
