@@ -1,38 +1,9 @@
+// initialise the environment
 require('dotenv').config()
-
-const express = require('express')
-const pretty = require("express-prettify")
-const ip = require("express-ip")
-
-const editjsonfile = require("edit-json-file")
-const spotifyJson = editjsonfile("./spotify.json")
-
-const SpotifyWebApi = require('spotify-web-api-node')
-const scopes = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-read-currently-playing']
-const redirectUri = 'https://williewalvis.co.za/spotify/setToken'
-const state = 'musix'
-
-const app = express()
-const path = require('path')
-
-const port = process.env.PORT
-
-const spotifyApi = new SpotifyWebApi({
-    redirectUri: redirectUri,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET
-})
-
-let loggedIn = false
 
 // set public dir
 
-app.use(pretty({ always: true }))
-app.use(express.static(path.join(__dirname, '/web')))
-app.engine('html', require('ejs').renderFile)
-app.set("view-engine", "html")
-app.set("views", path.join(__dirname, "/web/html"))
-app.use(ip().getIpInfoMiddleware)
+
 
 // web app homepage
 
@@ -42,12 +13,6 @@ app.get('/', async (req, res, next) => {
     // end function 
     return
 }) // ! REMEMBER TO ADD AUTH MIDDLEWARE AGAIN; ALSO REWORK THE SPOTIFY INTEGRATION, IT IS SHIT
-
-// my own domain features
-
-app.get('/optog', async (req, res) => {
-    res.redirect("https://willieewalvis-my.sharepoint.com/:v:/g/personal/wilmar_malherbe_williewalvis_co_za/EZ4yHxa26B1JlqV9ZXSrDfsBXhgNVieB392gHibslflCVg?e=aPekJt")
-})
 
 // spotify based stuff
 
@@ -172,16 +137,6 @@ function checkAuth(req, res, next) {
         next()
     }
 }
-
-// app redundancy
-
-app.use((req, res, next) => {
-    res.redirect('/')
-})
-
-// setup main web app
-
-app.listen(port, () => { console.log(`web online ${port}`) })
 
 // have daemon become calm  
 
