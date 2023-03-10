@@ -56,7 +56,7 @@ module.exports = {
             } catch (err) {
 
                 // log the error
-                console.log(err)
+                console.error(err)
 
                 // reject the function
                 return reject("Could not complete the function.")
@@ -69,12 +69,13 @@ module.exports = {
 
     /**
      * @Internal
-     * Creates a authorization URL that Spotify uses to identify the Web App.
+     * Syncs the Spotify API with the Web App, which allows access to data.
      * If successfully returned, then the app will be granted access to accounts.
      * @param {String} auth The authorization code that is returned by Spotify to access private data.
-     * @returns {Promise<String>} Returns the URL string.
+     * @param {Boolean} onStart Parameter to determine if should check for initial data without having to force login.
+     * @returns {Promise<void>} Returns nothing, just resolves.
      */
-    authorizationCodeGrant: async (auth) => {
+    authorizationCodeGrant: async (auth, onStart) => {
 
         // return new promise
         return new Promise(async (resolve, reject) => {
@@ -82,42 +83,119 @@ module.exports = {
             // initiate try catch
             try {
 
-                // use spotify to check the auth code
-                spotifyApi.authorizationCodeGrant(auth).then(
+                // check if first time/initial run
+                if (!onStart || typeof onStart == "undefined") {
 
-                    function (data) {
+                    // use spotify to check the auth code
+                    spotifyApi.authorizationCodeGrant(auth).then(
 
-                        // set logged in boolean
-                        loggedIn = true
+                        // function for data
+                        function (data) {
 
-                        // set spotify api values
-                        spotifyApi.setAccessToken(data.body['access_token'])
-                        spotifyApi.setRefreshToken(data.body['refresh_token'])
+                            // set logged in boolean
+                            loggedIn = true
 
-                        // set new credentials in file
-                        spotifyJson.set("accessToken", data.body['access_token'])
-                        spotifyJson.set("refreshToken", data.body['refresh_token'])
-                        spotifyJson.save()
+                            // set spotify api values
+                            spotifyApi.setAccessToken(data.body['access_token'])
+                            spotifyApi.setRefreshToken(data.body['refresh_token'])
 
-                        // return some json data fam
-                        res.status(200).json({
-                            tokenExpiry: data.body['expires_in'],
-                            accessToken: data.body['access_token'],
-                            refreshToken: data.body['refresh_token']
-                        })
+                            // set new credentials in file
+                            spotifyJson.set("accessToken", data.body['access_token'])
+                            spotifyJson.set("refreshToken", data.body['refresh_token'])
+                            spotifyJson.save()
 
-                    },
+                            // resolve with void
+                            return resolve()
 
-                    function (err) {
-                        res.status(200).json({ err })
+                        },
+
+                        // function with error
+                        function (err) {
+
+                            // throw the error out of the function
+                            throw new Error(err)
+
+                        }
+
+                    )
+
+                } else {
+
+                    // check if old access token exists
+                    if (spotifyJson.get("accessToken") !== "") {
+
+                        // log current status
+                        console.log("Trying to use old access token to set Spotify API Credentials.")
+
+                        // set credentials
+                        spotifyApi.setAccessToken(spotifyJson.get("accessToken"))
+                        spotifyApi.setRefreshToken(spotifyJson.get("refreshToken"))
+
+                        // do a check to confirm
+                        spotifyApi.getMyCurrentPlayingTrack().then(
+
+                            // function with data
+                            function (data) {
+
+                                // log current short status
+                                console.log("Spotify has successfully sub-authenticated.")
+
+                                // force run reauthentication
+                                spotifyApi.refreshAccessToken().then(
+
+                                    // function with data
+                                    function (data) {
+
+                                        // set new access token
+                                        spotifyApi.setAccessToken(data.body['access_token'])
+
+                                        // set new credentials in file
+                                        spotifyJson.set("accessToken", data.body['access_token'])
+                                        spotifyJson.save()
+
+                                        // spotify is logged in
+                                        loggedIn = true
+
+                                        // end function
+                                        return resolve()
+
+                                    },
+
+                                    // function with error
+                                    function (err) {
+
+                                        console.log("error refreshing spotify")
+                                        console.error(err)
+
+                                    }
+
+                                )
+
+                            },
+
+                            // function with error
+                            function (err) {
+
+                                // log current status and error
+                                console.log("Access token has expired. \nManual login is required to make use of function subset. \nLogged @ " + new Date(Date.now()).toString())
+
+                            }
+
+                        )
+
+                    } else {
+
+                        // throw error
+                        throw new Error("No old access token could be found.")
+
                     }
 
-                )
+                }
 
             } catch (err) {
 
-                // log the error
-                console.log(err)
+                // log error to console
+                console.error(err)
 
                 // reject the function
                 return reject("Could not complete the function.")
@@ -128,6 +206,12 @@ module.exports = {
 
     },
 
+    /**
+    * @Internal
+    * Retrieves Spotify playing data from the API and returns.
+    * Requires prior authentication before continuing.
+    * @returns {Promise<SpotifyApi.CurrentlyPlayingResponse>} Returns object with data from Spotify.
+    */
     getMyCurrentPlayingTrack: async () => {
 
         // return new promise
@@ -136,12 +220,41 @@ module.exports = {
             // initiate try catch
             try {
 
+                // check if logged in
+                if (loggedIn) {
 
+                    // get current play state from spotify servers
+                    spotifyApi.getMyCurrentPlayingTrack().then(
+
+                        // function with data
+                        function (data) {
+
+                            // resolve with data
+                            return resolve(data.body)
+
+                        },
+
+                        // function with error
+                        function (err) {
+
+                            // throw the error
+                            throw new Error(err)
+
+                        }
+
+                    )
+
+                } else {
+
+                    // throw error
+                    throw new Error("User is not logged in, cannot retrieve data.")
+
+                }
 
             } catch (err) {
 
                 // log the error
-                console.log(err)
+                console.error(err)
 
                 // reject the function
                 return reject("Could not complete the function.")
@@ -149,6 +262,72 @@ module.exports = {
             }
 
         })
+
+    },
+
+    /**
+    * @Internal
+    * Starts the AccessToken refresher for continuous data access.
+    * Requires prior authentication before continuing.
+    * @returns {void} Returns nothing, just refreshes.
+    */
+    accessTokenRefresher: async () => {
+
+        // initiate try catch
+        try {
+
+            // interval based function
+            setInterval(async () => {
+
+                // check if logged in
+                if (loggedIn) {
+
+                    // log current status
+                    console.log("Starting refresh, user is logged in.")
+
+                    // run refresh access token from spotify
+                    spotifyApi.refreshAccessToken().then(
+
+                        // function with data
+                        function (data) {
+
+                            // set internal spotify api token
+                            spotifyApi.setAccessToken(data.body['access_token'])
+
+                            // set new credentials in file
+                            spotifyJson.set("accessToken", data.body['access_token'])
+                            spotifyJson.save()
+
+                            // log current state
+                            console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
+
+                        },
+
+                        // function with error
+                        function (err) {
+
+                            // log the error
+                            console.error("There was an error: \n\n" + err)
+
+                        }
+
+                    )
+
+                } else {
+
+                    // log error to console
+                    console.error("Could not refresh, user is not logged in.")
+
+                }
+
+            }, 2400000) //  run every 40 minutes
+
+        } catch (err) {
+
+            // log the error
+            console.error(err)
+
+        }
 
     }
 

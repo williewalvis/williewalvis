@@ -66,28 +66,6 @@ app.get('/spotify/getPlayState', async (req, res) => {
         })
 })
 
-// reset spotify access grant
-
-setInterval(() => {
-    if (loggedIn) {
-        console.log("refreshing spotify")
-        spotifyApi.refreshAccessToken().then(
-            function (data) {
-                spotifyApi.setAccessToken(data.body['access_token'])
-                // set new credentials in file
-                spotifyJson.set("accessToken", data.body['access_token'])
-                spotifyJson.save()
-            },
-            function (err) {
-                console.log("error refreshing spotify")
-                console.error(err)
-            }
-        )
-    } else {
-        console.log("not refreshing spotify")
-    }
-}, 2400000) // 40 minutes 
-
 // check if access token exists for spotify
 
 async function doSpot() {
