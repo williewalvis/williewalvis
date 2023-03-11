@@ -15,7 +15,7 @@ app.use(pretty({ always: true }))
 app.use(express.static(path.join(__dirname, '../web')))
 app.engine('html', require('ejs').renderFile)
 app.set("view-engine", "html")
-app.set("views", path.join(__dirname, "/web/html"))
+app.set("views", path.join(__dirname, "../web/html"))
 app.use(ip().getIpInfoMiddleware)
 
 // app get requests
@@ -51,4 +51,4 @@ app.use((req, res, next) => {
 })
 
 // listen app
-app.listen(port, () => { console.log(`web online ${port}`) })
+app.listen(port, () => { console.log(`Web Online @ ${port}`) })
