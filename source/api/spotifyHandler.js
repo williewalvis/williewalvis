@@ -164,8 +164,8 @@ module.exports = {
                                     // function with error
                                     function (err) {
 
-                                        console.log("error refreshing spotify")
-                                        console.error(err)
+                                        // throw error to function
+                                        throw new Error(err)
 
                                     }
 
@@ -176,8 +176,8 @@ module.exports = {
                             // function with error
                             function (err) {
 
-                                // log current status and error
-                                console.log("Access token has expired. \nManual login is required to make use of function subset. \nLogged @ " + new Date(Date.now()).toString())
+                                // throw error to function
+                                throw new Error(err)
 
                             }
 
@@ -275,6 +275,9 @@ module.exports = {
 
         // initiate try catch
         try {
+
+            // log that refresher has started
+            console.log("Spotify Access Refresher has started successfully.")
 
             // interval based function
             setInterval(async () => {
