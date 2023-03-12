@@ -24,7 +24,7 @@ module.exports = {
         try {
 
             // check if user is in query
-            if (req.query.user && req.query.user == process.env.USER) {
+            if (req.query.user && req.query.user == process.env.SPOTIFYACCOUNT) {
 
                 // run function to set auth token
                 SpotifyHandler.createAuthorizeURL()
