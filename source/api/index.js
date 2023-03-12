@@ -53,4 +53,20 @@ app.use((req, res, next) => {
 })
 
 // listen app
-app.listen(port, () => { console.log(`Web Online @ ${port}`); spotifyHandler.authorizationCodeGrant("onStart", true) })
+app.listen(port, async () => { 
+    
+    // log web app status
+    console.log(`Web Online @ ${port}`) 
+    
+    // wrap in try catch block
+    await spotifyHandler.authorizationCodeGrant("onStart", true) 
+    
+    	// catch any errors that might happen
+    	.catch(err => {
+        
+        	// log error and the continue
+        	console.log(err)
+        
+        })
+    
+})
