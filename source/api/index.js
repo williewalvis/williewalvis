@@ -51,4 +51,4 @@ app.use((req, res, next) => {
 })
 
 // listen app
-app.listen(port, () => { console.log(`Web Online @ ${port}`) })
+app.listen(port, () => { console.log(`Web Online @ ${port}`); require("./spotifyHandler").authorizationCodeGrant("onstart", true) })
