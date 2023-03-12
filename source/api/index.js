@@ -3,6 +3,8 @@ const express = require('express')
 const pretty = require("express-prettify")
 const ip = require("express-ip")
 
+const spotifyHandler = require("./spotifyHandler")
+
 const app = express()
 
 const path = require('path')
@@ -51,4 +53,4 @@ app.use((req, res, next) => {
 })
 
 // listen app
-app.listen(port, () => { console.log(`Web Online @ ${port}`); require("./spotifyHandler").authorizationCodeGrant("onstart", true) })
+app.listen(port, () => { console.log(`Web Online @ ${port}`); spotifyHandler.authorizationCodeGrant("onStart", true) })
