@@ -160,8 +160,8 @@ module.exports = {
                                         spotifyJson.set("accessToken", data.body['access_token'])
                                         spotifyJson.save()
 
-                                        // spotify is logged in
-                                        loggedIn = true
+                                        // set logged in boolean
+                                        spotifyJson.set("loggedIn", true)
 
                                         // end function
                                         return resolve()
