@@ -188,8 +188,8 @@ module.exports = {
 
                         ).catch(err => {
 
-                            // throw error to function
-                            throw new Error(err)
+                            // // throw error to function
+                            // throw new Error(err)
 
                         })
 
