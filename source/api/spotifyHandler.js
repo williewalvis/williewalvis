@@ -11,7 +11,6 @@ const spotifyApi = new SpotifyWebApi({
 const path = require("path")
 
 const editjsonfile = require("edit-json-file")
-const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
 let loggedIn = false
 
@@ -82,6 +81,9 @@ module.exports = {
 
             // initiate try catch
             try {
+
+                // set spotify shit
+                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
                 // check if first time/initial run
                 if (!onStart || typeof onStart == "undefined") {
@@ -296,6 +298,9 @@ module.exports = {
 
             // interval based function
             setInterval(async () => {
+
+                // set spotify shit
+                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
                 // check if logged in
                 if (loggedIn) {
