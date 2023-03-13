@@ -153,15 +153,15 @@ module.exports = {
                                     // function with data
                                     function (data) {
 
+                                        // set logged in boolean
+                                        spotifyJson.set("loggedIn", true)
+
                                         // set new access token
                                         spotifyApi.setAccessToken(data.body['access_token'])
 
                                         // set new credentials in file
                                         spotifyJson.set("accessToken", data.body['access_token'])
                                         spotifyJson.save()
-
-                                        // set logged in boolean
-                                        spotifyJson.set("loggedIn", true)
 
                                         // end function
                                         return resolve()
