@@ -127,61 +127,71 @@ module.exports = {
                         // log current status
                         console.log("Trying to use old access token to set Spotify API Credentials.")
 
-                        // set credentials
-                        spotifyApi.setAccessToken(spotifyJson.get("accessToken"))
-                        spotifyApi.setRefreshToken(spotifyJson.get("refreshToken"))
+                        // wrap in try catch block
+                        try {
 
-                        // do a check to confirm
-                        spotifyApi.getMyCurrentPlayingTrack().then(
+                            // set credentials
+                            spotifyApi.setAccessToken(spotifyJson.get("accessToken"))
+                            spotifyApi.setRefreshToken(spotifyJson.get("refreshToken"))
 
-                            // function with data
-                            function (data) {
+                            // do a check to confirm
+                            spotifyApi.getMyCurrentPlayingTrack().then(
 
-                                // log current short status
-                                console.log("Spotify has successfully sub-authenticated.")
+                                // function with data
+                                function (data) {
 
-                                // force run reauthentication
-                                spotifyApi.refreshAccessToken().then(
+                                    // log current short status
+                                    console.log("Spotify has successfully sub-authenticated.")
 
-                                    // function with data
-                                    function (data) {
+                                    // force run reauthentication
+                                    spotifyApi.refreshAccessToken().then(
 
-                                        // set new access token
-                                        spotifyApi.setAccessToken(data.body['access_token'])
+                                        // function with data
+                                        function (data) {
 
-                                        // set new credentials in file
-                                        spotifyJson.set("accessToken", data.body['access_token'])
-                                        spotifyJson.save()
+                                            // set new access token
+                                            spotifyApi.setAccessToken(data.body['access_token'])
 
-                                        // spotify is logged in
-                                        loggedIn = true
+                                            // set new credentials in file
+                                            spotifyJson.set("accessToken", data.body['access_token'])
+                                            spotifyJson.save()
 
-                                        // end function
-                                        return resolve()
+                                            // spotify is logged in
+                                            loggedIn = true
 
-                                    },
+                                            // end function
+                                            return resolve()
 
-                                    // function with error
-                                    function (err) {
+                                        },
 
-                                        // throw error to function
-                                        throw new Error("Could not successfully authenticate, manual required.")
+                                        // function with error
+                                        function (err) {
 
-                                    }
+                                            // throw error to function
+                                            throw new Error("Could not successfully authenticate, manual required.")
 
-                                )
+                                        }
 
-                            },
+                                    )
 
-                            // function with error
-                            function (err) {
+                                },
 
-                                // throw error to function
-                                throw new Error("Expired access token, cannot be used.")
+                                // function with error
+                                function (err) {
 
-                            }
+                                    // throw error to function
+                                    throw new Error("Expired access token, cannot be used.")
 
-                        )
+                                }
+
+                            )
+
+                        } catch (err) {
+
+                            // idk what this error is
+                            throw new Error("Some error occured while setting old token/doing init request.")
+
+                        }
 
                     } else {
 
