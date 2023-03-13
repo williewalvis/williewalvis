@@ -165,7 +165,7 @@ module.exports = {
                                     function (err) {
 
                                         // throw error to function
-                                        throw new Error(err)
+                                        throw new Error("Could not successfully authenticate, manual required.")
 
                                     }
 
@@ -177,7 +177,7 @@ module.exports = {
                             function (err) {
 
                                 // throw error to function
-                                throw new Error(err)
+                                throw new Error("Expired access token, cannot be used.")
 
                             }
 

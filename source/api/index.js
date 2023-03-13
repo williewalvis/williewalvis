@@ -62,11 +62,6 @@ app.listen(port, async () => {
     await spotifyHandler.authorizationCodeGrant("onStart", true) 
     
     	// catch any errors that might happen
-    	.catch(err => {
-        
-        	// log error and the continue
-        	console.log(err)
-        
-        })
+    	.catch(err, () => { return })
     
 })
