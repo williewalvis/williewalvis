@@ -95,7 +95,7 @@ module.exports = {
                         function (data) {
 
                             // set logged in boolean
-                            loggedIn = true
+                            spotifyJson.set("loggedIn", true)
 
                             // set spotify api values
                             spotifyApi.setAccessToken(data.body['access_token'])
@@ -232,8 +232,11 @@ module.exports = {
             // initiate try catch
             try {
 
+                // set spotify shit
+                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+
                 // check if logged in
-                if (loggedIn) {
+                if (spotifyJson.get("loggedIn")) {
 
                     // get current play state from spotify servers
                     spotifyApi.getMyCurrentPlayingTrack().then(
@@ -293,6 +296,9 @@ module.exports = {
         // initiate try catch
         try {
 
+            // set logged in to false
+            editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
+
             // log that refresher has started
             console.log("Spotify Access Refresher has started successfully.")
 
@@ -303,7 +309,7 @@ module.exports = {
                 const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
                 // check if logged in
-                if (loggedIn) {
+                if (spotifyJson.get("loggedIn")) {
 
                     // log current status
                     console.log("Starting refresh, user is logged in.")
