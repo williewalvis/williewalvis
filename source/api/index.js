@@ -60,5 +60,6 @@ app.listen(port, async () => {
 
     // wrap in try catch block
     await spotifyHandler.authorizationCodeGrant("onStart", true)
+        .catch((error) => { void error })
 
 })
