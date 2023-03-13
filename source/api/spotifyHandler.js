@@ -188,8 +188,8 @@ module.exports = {
 
                         ).catch(err => {
 
-                            // // throw error to function
-                            // throw new Error(err)
+                            // log could not complete
+                            console.log("Could not use old token, manual authentication required.")
 
                         })
 
