@@ -31,10 +31,7 @@ module.exports = {
                 SpotifyHandler.authorizationCodeGrant(req.query.code)
 
                     // function when promise is resolved
-                    .then(async () => { 
-
-                        // RUN THING //! THIS IS THE THING SUIVHSIUHDVB
-                        spotifyHandler.accessTokenRefresher()
+                    .then(async () => {
 
                         // send response to client
                         res.send("Successfully authenticated.")

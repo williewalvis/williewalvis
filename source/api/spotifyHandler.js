@@ -297,64 +297,64 @@ module.exports = {
         try {
 
             // set logged in to false
-            // editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
+            editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
 
             // log that refresher has started
             console.log("Spotify Access Refresher has started successfully.")
 
-            // interval based function //! UHDIVUSHBVISDUBV HELP
-            // setInterval(async () => {
+            // interval based function
+            setInterval(async () => {
 
-            // set spotify shit
-            const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+                // set spotify shit
+                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
-            // check if logged in
-            if (spotifyJson.get("loggedIn")) {
+                // check if logged in
+                if (spotifyJson.get("loggedIn")) {
 
-                // log current status
-                console.log("Starting refresh, user is logged in.")
+                    // log current status
+                    console.log("Starting refresh, user is logged in.")
 
-                // run refresh access token from spotify
-                spotifyApi.refreshAccessToken().then(
+                    // run refresh access token from spotify
+                    spotifyApi.refreshAccessToken().then(
 
-                    // function with data
-                    function (data) {
+                        // function with data
+                        function (data) {
 
-                        // set logged in boolean
-                        spotifyJson.set("loggedIn", true)
+                            // set logged in boolean
+                            spotifyJson.set("loggedIn", true)
 
-                        // set new access token
-                        spotifyApi.setAccessToken(data.body['access_token'])
-                        spotifyApi.setRefreshToken(data.body["refresh_token"])
+                            // set new access token
+                            spotifyApi.setAccessToken(data.body['access_token'])
+                            spotifyApi.setRefreshToken(data.body["refresh_token"])
 
-                        // set new credentials in file
-                        spotifyJson.set("accessToken", data.body['access_token'])
-                        spotifyJson.set("refreshToken", data.body['refresh_token'])
-                        spotifyJson.save()
+                            // set new credentials in file
+                            spotifyJson.set("accessToken", data.body['access_token'])
+                            spotifyJson.set("refreshToken", data.body['refresh_token'])
+                            spotifyJson.save()
 
-                        // log current state
-                        console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
+                            // log current state
+                            console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
 
-                    },
+                        },
 
-                    // function with error
-                    function (err) {
+                        // function with error
+                        function (err) {
 
-                        // log the error
-                        console.error("There was an error: \n\n" + err)
+                            // log the error
+                            console.error("There was an error: \n\n" + err)
 
-                    }
+                        }
 
-                )
+                    )
 
-            } else {
+                } else {
 
-                // log error to console
-                console.error("Could not refresh, user is not logged in.")
+                    // log error to console
+                    console.error("Could not refresh, user is not logged in.")
 
-            }
+                }
 
-            // }, 2400000) //  run every 40 minutes
+            }, 2400000) //  run every 40 minutes
 
         } catch (err) {
 
