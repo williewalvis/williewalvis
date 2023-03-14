@@ -88,6 +88,8 @@ module.exports = {
                 // check if first time/initial run
                 if (!onStart || typeof onStart == "undefined") {
 
+                    console.log("EK KOM HIER")
+
                     // use spotify to check the auth code
                     spotifyApi.authorizationCodeGrant(auth).then(
 
