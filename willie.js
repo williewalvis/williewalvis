@@ -28,4 +28,4 @@ let startAPI = () => {
 startAPI()
 
 // status code for pterodactyl daemon
-console.log("[PT_DAEMON] Done!")
+console.log("[PT_DAEMON] Finished sync, calm down.")
