@@ -86,8 +86,6 @@ module.exports = {
                 // check if first time/initial run
                 if (!onStart || typeof onStart == "undefined") {
 
-                    console.log("EK KOM HIER")
-
                     // use spotify to check the auth code
                     spotifyApi.authorizationCodeGrant(auth).then(
 
@@ -158,9 +156,11 @@ module.exports = {
 
                                         // set new access token
                                         spotifyApi.setAccessToken(data.body['access_token'])
+                                        spotifyApi.setRefreshToken(data.body["refresh_token"])
 
                                         // set new credentials in file
                                         spotifyJson.set("accessToken", data.body['access_token'])
+                                        spotifyJson.set("refreshToken", data.body['refresh_token'])
                                         spotifyJson.save()
 
                                         // end function
@@ -320,17 +320,16 @@ module.exports = {
                     // function with data
                     function (data) {
 
-                        console.log("I FUCKING GET HERE")
-
-                        // set internal spotify api token
-                        spotifyApi.setAccessToken(data.body['access_token'])
-                        console.log(data.body)
-
                         // set logged in boolean
                         spotifyJson.set("loggedIn", true)
 
+                        // set new access token
+                        spotifyApi.setAccessToken(data.body['access_token'])
+                        spotifyApi.setRefreshToken(data.body["refresh_token"])
+
                         // set new credentials in file
                         spotifyJson.set("accessToken", data.body['access_token'])
+                        spotifyJson.set("refreshToken", data.body['refresh_token'])
                         spotifyJson.save()
 
                         // log current state
