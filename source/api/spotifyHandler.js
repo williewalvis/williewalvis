@@ -305,50 +305,55 @@ module.exports = {
             // interval based function //! UHDIVUSHBVISDUBV HELP
             // setInterval(async () => {
 
-                // set spotify shit
-                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+            // set spotify shit
+            const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
 
-                // check if logged in
-                if (spotifyJson.get("loggedIn")) {
+            // check if logged in
+            if (spotifyJson.get("loggedIn")) {
 
-                    // log current status
-                    console.log("Starting refresh, user is logged in.")
+                // log current status
+                console.log("Starting refresh, user is logged in.")
 
-                    // run refresh access token from spotify
-                    spotifyApi.refreshAccessToken().then(
+                // run refresh access token from spotify
+                spotifyApi.refreshAccessToken().then(
 
-                        // function with data
-                        function (data) {
+                    // function with data
+                    function (data) {
 
-                            // set internal spotify api token
-                            spotifyApi.setAccessToken(data.body['access_token'])
-                            console.log(data.body)
+                        console.log("I FUCKING GET HERE")
 
-                            // set new credentials in file
-                            spotifyJson.set("accessToken", data.body['access_token'])
-                            spotifyJson.save()
+                        // set internal spotify api token
+                        spotifyApi.setAccessToken(data.body['access_token'])
+                        console.log(data.body)
 
-                            // log current state
-                            console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
+                        // set logged in boolean
+                        spotifyJson.set("loggedIn", true)
 
-                        },
+                        // set new credentials in file
+                        spotifyJson.set("accessToken", data.body['access_token'])
+                        spotifyJson.save()
 
-                        // function with error
-                        function (err) {
+                        // log current state
+                        console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
 
-                            // log the error
-                            console.error("There was an error: \n\n" + err)
+                    },
 
-                        }
+                    // function with error
+                    function (err) {
 
-                    )
+                        // log the error
+                        console.error("There was an error: \n\n" + err)
 
-                } else {
+                    }
 
-                    // log error to console
-                    console.error("Could not refresh, user is not logged in.")
+                )
 
-                }
+            } else {
+
+                // log error to console
+                console.error("Could not refresh, user is not logged in.")
+
+            }
 
             // }, 2400000) //  run every 40 minutes
 
