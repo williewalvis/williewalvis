@@ -12,8 +12,6 @@ const path = require("path")
 
 const editjsonfile = require("edit-json-file")
 
-let loggedIn = false
-
 // module exports
 module.exports = {
 
@@ -299,7 +297,7 @@ module.exports = {
         try {
 
             // set logged in to false
-            editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
+            // editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
 
             // log that refresher has started
             console.log("Spotify Access Refresher has started successfully.")
