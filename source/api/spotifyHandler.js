@@ -113,14 +113,14 @@ module.exports = {
                         function (err) {
 
                             // throw the error out of the function
-                            throw new Error(err)
+                            return reject(err)
 
                         }
 
                     ).catch(err => {
 
                         // throw error to function
-                        throw new Error(err)
+                        return reject(err)
 
                     })
 
@@ -172,7 +172,7 @@ module.exports = {
                                     function (err) {
 
                                         // throw error to function
-                                        throw new Error("Could not successfully authenticate, manual required.")
+                                        return reject("Could not successfully authenticate, manual required.")
 
                                     }
 
@@ -184,7 +184,7 @@ module.exports = {
                             function (err) {
 
                                 // throw error to function
-                                throw new Error("Expired access token, cannot be used.")
+                                return reject("Expired access token, cannot be used.")
 
                             }
 
@@ -198,7 +198,7 @@ module.exports = {
                     } else {
 
                         // throw error
-                        throw new Error("No old access token could be found.")
+                        return reject("No old access token could be found.")
 
                     }
 
@@ -253,21 +253,21 @@ module.exports = {
                         function (err) {
 
                             // throw the error
-                            throw new Error(err)
+                            return reject(err)
 
                         }
 
                     ).catch(err => {
 
                         // throw error to function
-                        throw new Error(err)
+                        return reject(err)
 
                     })
 
                 } else {
 
                     // throw error
-                    throw new Error("User is not logged in, cannot retrieve data.")
+                    return reject("User is not logged in, cannot retrieve data.")
 
                 }
 
