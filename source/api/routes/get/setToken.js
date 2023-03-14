@@ -1,5 +1,6 @@
 // endpoint
 const Express = require("express")
+const spotifyHandler = require("../../spotifyHandler")
 const SpotifyHandler = require("../../spotifyHandler")
 
 let base = null
@@ -31,6 +32,9 @@ module.exports = {
 
                     // function when promise is resolved
                     .then(async () => { 
+
+                        // RUN THING //! THIS IS THE THING SUIVHSIUHDVB
+                        spotifyHandler.accessTokenRefresher()
 
                         // send response to client
                         res.send("Successfully authenticated.")

@@ -302,8 +302,8 @@ module.exports = {
             // log that refresher has started
             console.log("Spotify Access Refresher has started successfully.")
 
-            // interval based function
-            setInterval(async () => {
+            // interval based function //! UHDIVUSHBVISDUBV HELP
+            // setInterval(async () => {
 
                 // set spotify shit
                 const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
@@ -322,6 +322,7 @@ module.exports = {
 
                             // set internal spotify api token
                             spotifyApi.setAccessToken(data.body['access_token'])
+                            console.log(data.body)
 
                             // set new credentials in file
                             spotifyJson.set("accessToken", data.body['access_token'])
@@ -349,7 +350,7 @@ module.exports = {
 
                 }
 
-            }, 2400000) //  run every 40 minutes
+            // }, 2400000) //  run every 40 minutes
 
         } catch (err) {
 
