@@ -203,7 +203,7 @@ module.exports = {
                     } else {
 
                         // throw error
-                        return reject("No old access token could be found.")
+                        return reject("No old refresh token could be found.")
 
                     }
 
