@@ -4,6 +4,7 @@ require('./source/spotify')()
 
 // variables
 let { Worker } = require('worker_threads')
+let SpotifyHandler = require('./source/spotify/funcs')
 
 // define worker threads
 let startAPI = () => {
@@ -29,3 +30,22 @@ startAPI()
 
 // status code for pterodactyl daemon
 console.log("[PT_DAEMON] Finished sync, calm down.")
+
+// log that refresher starting
+console.log("[REFRESHER] Starting refresher.")
+
+// define refresher
+setInterval(async () => {
+
+    // log refresh and time
+    console.log("[REFRESHER] Refreshing token at " + new Date().toLocaleTimeString())
+
+    // run the authenticate function
+    await SpotifyHandler.authorizationCodeGrant("onRefresh", true)
+        .then(() => { void 0 })
+        .catch((error) => { void error })
+
+    // log complete refresh
+    console.log("[REFRESHER] Refresh complete.")
+
+}, 120000/2) // * 30 MINUTES
