@@ -1,6 +1,5 @@
 // initialise the environment
 require('dotenv').config()
-require('./source/spotify')()
 
 // variables
 let { Worker } = require('worker_threads')
