@@ -96,7 +96,7 @@ module.exports = {
                                 {
 
                                     // database function flag
-                                    $setOnInsert: {
+                                    $set: {
 
                                         // sub division of the document
                                         "data": {
@@ -165,14 +165,10 @@ module.exports = {
                                     {
 
                                         // database function flag
-                                        $setOnInsert: {
+                                        $set: {
 
                                             // sub division of the document
-                                            "data": {
-
-                                                "accessToken": data.body['access_token']
-
-                                            }
+                                            "data.accessToken": data.body['access_token']
 
                                         }
 
@@ -322,14 +318,10 @@ module.exports = {
                                 {
 
                                     // database function flag
-                                    $setOnInsert: {
+                                    $set: {
 
                                         // sub division of the document
-                                        "data": {
-
-                                            "accessToken": data.body['access_token']
-
-                                        }
+                                        "data.accessToken": data.body['access_token']
 
                                     }
 
