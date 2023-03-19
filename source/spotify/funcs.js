@@ -96,7 +96,7 @@ module.exports = {
                                 {
 
                                     // database function flag
-                                    $set: {
+                                    $setOnInsert: {
 
                                         // sub division of the document
                                         "data": {
@@ -165,7 +165,7 @@ module.exports = {
                                     {
 
                                         // database function flag
-                                        $set: {
+                                        $setOnInsert: {
 
                                             // sub division of the document
                                             "data": {
@@ -322,7 +322,7 @@ module.exports = {
                                 {
 
                                     // database function flag
-                                    $set: {
+                                    $setOnInsert: {
 
                                         // sub division of the document
                                         "data": {
