@@ -47,4 +47,4 @@ setInterval(async () => {
     // log complete refresh
     console.log("[REFRESHER] Refresh complete.")
 
-}, 120000/2) // * 30 MINUTES
+}, 1800000) // * 30 MINUTES
