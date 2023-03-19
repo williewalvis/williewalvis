@@ -104,7 +104,10 @@ module.exports = {
                                             "accessToken": data.body['access_token'],
                                             "refreshToken": data.body['refresh_token']
 
-                                        }
+                                        },
+
+                                        // set lastaccessed
+                                        "lastAccessed": new Date()
 
                                     }
 
@@ -168,7 +171,10 @@ module.exports = {
                                         $set: {
 
                                             // sub division of the document
-                                            "data.accessToken": data.body['access_token']
+                                            "data.accessToken": data.body['access_token'],
+
+                                            // set lastaccessed
+                                            "lastAccessed": new Date()
 
                                         }
 
@@ -321,7 +327,10 @@ module.exports = {
                                     $set: {
 
                                         // sub division of the document
-                                        "data.accessToken": data.body['access_token']
+                                        "data.accessToken": data.body['access_token'],
+
+                                        // set lastaccessed
+                                        "lastAccessed": new Date()
 
                                     }
 
