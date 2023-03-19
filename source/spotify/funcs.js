@@ -306,13 +306,13 @@ module.exports = {
                 try {
 
                     // run refresh access token from spotify
-                    spotifyApi.refreshAccessToken().then(
+                    require("./session/resources").refreshAccessToken().then(
 
                         // function with data
                         async function (data) {
 
                             // set new access token
-                            spotifyApi.setAccessToken(data.body['access_token'])
+                            require("./session/resources").setAccessToken(data.body['access_token'])
 
                             // set new credentials in database
                             await db.collection("auth").updateOne(
@@ -360,7 +360,7 @@ module.exports = {
 
                 }
 
-            }, 1800000) // * run every 30 minutes
+            }, 120000) // * run every 30 minutes (1800000)
 
         } catch (err) {
 
