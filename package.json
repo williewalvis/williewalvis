@@ -18,12 +18,12 @@
   "homepage": "https://github.com/williewalvis/williewalvis#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "edit-json-file": "^1.7.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "express-ip": "^1.0.4",
     "express-prettify": "^0.1.1",
     "fs": "^0.0.1-security",
+    "mongodb": "^5.1.0",
     "path": "^0.12.7",
     "spotify-web-api-node": "^5.0.2",
     "websocket": "^1.0.34"

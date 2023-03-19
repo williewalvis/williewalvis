@@ -1,8 +1,11 @@
 // endpoint
 const Express = require("express")
-const SpotifyHandler = require("../../spotifyHandler")
+const SpotifyHandler = require("../../../spotify/funcs")
 
+// base input for passing variables between files
 let base = null
+
+// route the user has to go to
 const route = "/spotify/getPlayState"
 
 module.exports = {

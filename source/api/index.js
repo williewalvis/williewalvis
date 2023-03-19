@@ -3,7 +3,7 @@ const express = require('express')
 const pretty = require("express-prettify")
 const ip = require("express-ip")
 
-const spotifyHandler = require("./spotifyHandler")
+const SpotifyHandler = require("../spotify/funcs")
 
 const app = express()
 
@@ -59,7 +59,8 @@ app.listen(port, async () => {
     console.log(`Web Online @ ${port}`)
 
     // wrap in try catch block
-    await spotifyHandler.authorizationCodeGrant("onStart", true)
+    await SpotifyHandler.authorizationCodeGrant("onStart", true)
+        .then(() => { void 0 })
         .catch((error) => { void error })
 
 })

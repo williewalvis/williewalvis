@@ -1,16 +1,6 @@
 // variables
-const SpotifyWebApi = require('spotify-web-api-node')
-const redirectUri = 'https://williewalvis.co.za/spotify/setToken'
-
-const spotifyApi = new SpotifyWebApi({
-    redirectUri: redirectUri,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET
-})
-
-const path = require("path")
-
-const editjsonfile = require("edit-json-file")
+const spotifyApi = require("./session/resources")
+const database = require("../database/connection")
 
 // module exports
 module.exports = {
@@ -80,8 +70,8 @@ module.exports = {
             // initiate try catch
             try {
 
-                // set spotify shit
-                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+                // get the database
+                let db = (await (await (new database).connect()).db(process.env.DATABASE_NAME))
 
                 // check if first time/initial run
                 if (!onStart || typeof onStart == "undefined") {
@@ -90,19 +80,37 @@ module.exports = {
                     spotifyApi.authorizationCodeGrant(auth).then(
 
                         // function for data
-                        function (data) {
-
-                            // set logged in boolean
-                            spotifyJson.set("loggedIn", true)
+                        async function (data) {
 
                             // set spotify api values
                             spotifyApi.setAccessToken(data.body['access_token'])
                             spotifyApi.setRefreshToken(data.body['refresh_token'])
 
-                            // set new credentials in file
-                            spotifyJson.set("accessToken", data.body['access_token'])
-                            spotifyJson.set("refreshToken", data.body['refresh_token'])
-                            spotifyJson.save()
+                            // set new access data in database
+                            await db.collection("auth").updateOne(
+
+                                // the search parameter
+                                { "_id": "spotifyData" },
+
+                                // the new data
+                                {
+
+                                    // database function flag
+                                    $set: {
+
+                                        // sub division of the document
+                                        "data": {
+
+                                            "accessToken": data.body['access_token'],
+                                            "refreshToken": data.body['refresh_token']
+
+                                        }
+
+                                    }
+
+                                }
+
+                            )
 
                             // resolve with void
                             return resolve()
@@ -126,57 +134,54 @@ module.exports = {
 
                 } else {
 
+                    // get the spotify data from the database
+                    let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" })).data
+
                     // check if old access token exists
-                    if (spotifyJson.get("accessToken") !== "") {
+                    if (spotifyJson["refreshToken"] != "") {
 
                         // log current status
-                        console.log("Trying to use old access token to set Spotify API Credentials.")
+                        console.log("Trying to use old refresh token to set Spotify API Credentials.")
 
-                        // set credentials
-                        spotifyApi.setAccessToken(spotifyJson.get("accessToken"))
-                        spotifyApi.setRefreshToken(spotifyJson.get("refreshToken"))
+                        // ! set refresh token (REFRESH TOKENS DO NOT EXPIRE AT ALL; NEED TO EXPLICITLY DISCONNECT)
+                        spotifyApi.setRefreshToken(spotifyJson["refreshToken"])
 
-                        // do a check to confirm
-                        spotifyApi.getMyCurrentPlayingTrack().then(
+                        // force run reauthentication
+                        spotifyApi.refreshAccessToken().then(
 
                             // function with data
-                            function (data) {
+                            async function (data) {
 
-                                // log current short status
-                                console.log("Spotify has successfully sub-authenticated.")
+                                // ! set new access token (ONLY NEED TO WORRY ABOUT THE ACCESS TOKEN)
+                                spotifyApi.setAccessToken(data.body['access_token'])
 
-                                // force run reauthentication
-                                spotifyApi.refreshAccessToken().then(
+                                // set new credentials in database
+                                await db.collection("auth").updateOne(
 
-                                    // function with data
-                                    function (data) {
+                                    // the search parameter
+                                    { "_id": "spotifyData" },
 
-                                        // set logged in boolean
-                                        spotifyJson.set("loggedIn", true)
+                                    // the new data
+                                    {
 
-                                        // set new access token
-                                        spotifyApi.setAccessToken(data.body['access_token'])
-                                        spotifyApi.setRefreshToken(data.body["refresh_token"])
+                                        // database function flag
+                                        $set: {
 
-                                        // set new credentials in file
-                                        spotifyJson.set("accessToken", data.body['access_token'])
-                                        spotifyJson.set("refreshToken", data.body['refresh_token'])
-                                        spotifyJson.save()
+                                            // sub division of the document
+                                            "data": {
 
-                                        // end function
-                                        return resolve()
+                                                "accessToken": data.body['access_token']
 
-                                    },
+                                            }
 
-                                    // function with error
-                                    function (err) {
-
-                                        // throw error to function
-                                        return reject("Could not successfully authenticate, manual required.")
+                                        }
 
                                     }
 
                                 )
+
+                                // end function
+                                return resolve()
 
                             },
 
@@ -184,14 +189,14 @@ module.exports = {
                             function (err) {
 
                                 // throw error to function
-                                return reject("Expired access token, cannot be used.")
+                                return reject("Could not successfully authenticate, manual required.")
 
                             }
 
                         ).catch(err => {
 
                             // log could not complete
-                            console.log("Could not use old token, manual authentication required.")
+                            console.log("Could not use old refresh token, please manually re-login to your account.")
 
                         })
 
@@ -232,44 +237,31 @@ module.exports = {
             // initiate try catch
             try {
 
-                // set spotify shit
-                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+                // get current play state from spotify servers
+                spotifyApi.getMyCurrentPlayingTrack().then(
 
-                // check if logged in
-                if (spotifyJson.get("loggedIn")) {
+                    // function with data
+                    function (data) {
 
-                    // get current play state from spotify servers
-                    spotifyApi.getMyCurrentPlayingTrack().then(
+                        // resolve with data
+                        return resolve(data.body)
 
-                        // function with data
-                        function (data) {
+                    },
 
-                            // resolve with data
-                            return resolve(data.body)
+                    // function with error
+                    function (err) {
 
-                        },
+                        // throw the error
+                        return reject("Could not complete web request.")
 
-                        // function with error
-                        function (err) {
+                    }
 
-                            // throw the error
-                            return reject(err)
+                ).catch(err => {
 
-                        }
+                    // throw error to function
+                    return reject("User is not authenticated, cannot get data.")
 
-                    ).catch(err => {
-
-                        // throw error to function
-                        return reject(err)
-
-                    })
-
-                } else {
-
-                    // throw error
-                    return reject("User is not logged in, cannot retrieve data.")
-
-                }
+                })
 
             } catch (err) {
 
@@ -296,41 +288,51 @@ module.exports = {
         // initiate try catch
         try {
 
-            // set logged in to false
-            editjsonfile(path.join(__dirname, "../database/spotify.json")).set("loggedIn", false).save()
-
             // log that refresher has started
             console.log("Spotify Access Refresher has started successfully.")
 
             // interval based function
             setInterval(async () => {
 
-                // set spotify shit
-                const spotifyJson = editjsonfile(path.join(__dirname, "../database/spotify.json"))
+                // log current status
+                console.log("Starting refresh, user is logged in.")
 
-                // check if logged in
-                if (spotifyJson.get("loggedIn")) {
-
-                    // log current status
-                    console.log("Starting refresh, user is logged in.")
+                // wrap in try catch
+                try {
 
                     // run refresh access token from spotify
                     spotifyApi.refreshAccessToken().then(
 
                         // function with data
-                        function (data) {
-
-                            // set logged in boolean
-                            spotifyJson.set("loggedIn", true)
+                        async function (data) {
 
                             // set new access token
                             spotifyApi.setAccessToken(data.body['access_token'])
-                            spotifyApi.setRefreshToken(data.body["refresh_token"])
 
-                            // set new credentials in file
-                            spotifyJson.set("accessToken", data.body['access_token'])
-                            spotifyJson.set("refreshToken", data.body['refresh_token'])
-                            spotifyJson.save()
+                            // set new credentials in database
+                            await db.collection("auth").updateOne(
+
+                                // the search parameter
+                                { "_id": "spotifyData" },
+
+                                // the new data
+                                {
+
+                                    // database function flag
+                                    $set: {
+
+                                        // sub division of the document
+                                        "data": {
+
+                                            "accessToken": data.body['access_token']
+
+                                        }
+
+                                    }
+
+                                }
+
+                            )
 
                             // log current state
                             console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
@@ -341,20 +343,20 @@ module.exports = {
                         function (err) {
 
                             // log the error
-                            console.error("There was an error: \n\n" + err)
+                            console.log(`\n\nCould not complete refresh, error: \n${err}`)
 
                         }
 
                     )
 
-                } else {
+                } catch (err) {
 
-                    // log error to console
-                    console.error("Could not refresh, user is not logged in.")
+                    // log error
+                    console.log(`\n\nCould not complete refresh, error: \n${err}`)
 
                 }
 
-            }, 2400000) //  run every 40 minutes
+            }, 1800000) // * run every 30 minutes
 
         } catch (err) {
 
