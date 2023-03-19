@@ -180,6 +180,9 @@ module.exports = {
 
                                 )
 
+                                // log complete
+                                console.log("Successfully used old refresh token to set Spotify API Credentials.")
+
                                 // end function
                                 return resolve()
 
