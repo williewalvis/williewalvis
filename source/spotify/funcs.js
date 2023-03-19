@@ -305,53 +305,69 @@ module.exports = {
                 // wrap in try catch
                 try {
 
-                    // run refresh access token from spotify
-                    require("./session/resources").refreshAccessToken().then(
+                    // get the database
+                    let db = (await (await (new database).connect()).db(process.env.DATABASE_NAME))
 
-                        // function with data
-                        async function (data) {
+                    // get the spotify data from the database
+                    let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" })).data
 
-                            // set new access token
-                            require("./session/resources").setAccessToken(data.body['access_token'])
+                    // check if old access token exists
+                    if (spotifyJson["refreshToken"] != "") {
 
-                            // set new credentials in database
-                            await db.collection("auth").updateOne(
+                        // run refresh access token from spotify
+                        spotifyApi.refreshAccessToken().then(
 
-                                // the search parameter
-                                { "_id": "spotifyData" },
+                            // function with data
+                            async function (data) {
 
-                                // the new data
-                                {
+                                // set new access token
+                                spotifyApi.setAccessToken(data.body['access_token'])
 
-                                    // database function flag
-                                    $set: {
+                                // set new credentials in database
+                                await db.collection("auth").updateOne(
 
-                                        // sub division of the document
-                                        "data.accessToken": data.body['access_token'],
+                                    // the search parameter
+                                    { "_id": "spotifyData" },
 
-                                        // set lastaccessed
-                                        "lastAccessed": new Date()
+                                    // the new data
+                                    {
+
+                                        // database function flag
+                                        $set: {
+
+                                            // sub division of the document
+                                            "data.accessToken": data.body['access_token'],
+
+                                            // set lastaccessed
+                                            "lastAccessed": new Date()
+
+                                        }
 
                                     }
 
-                                }
+                                )
 
-                            )
+                                // log current state
+                                console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
 
-                            // log current state
-                            console.log("Successfully refreshed Spotify login @ " + new Date(Date.now()).toString())
+                            },
 
-                        },
+                            // function with error
+                            function (err) {
 
-                        // function with error
-                        function (err) {
+                                // log the error
+                                console.log(`\n\nCould not complete refresh, error: \n${err}`)
 
-                            // log the error
-                            console.log(`\n\nCould not complete refresh, error: \n${err}`)
+                            }
 
-                        }
+                        )
 
-                    )
+                    } else {
+
+                        // log that no refresh token exists
+                        console.log("No refresh token exists, cannot complete refresh.")
+
+                    }
 
                 } catch (err) {
 
