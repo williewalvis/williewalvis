@@ -3,7 +3,7 @@ const express = require('express')
 const pretty = require("express-prettify")
 const ip = require("express-ip")
 
-const SpotifyHandler = require("../spotify/funcs")
+const SpotifyHandler = require("../spotify")
 
 const app = express()
 
