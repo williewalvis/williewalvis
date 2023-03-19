@@ -4,7 +4,7 @@ require('./source/spotify')()
 
 // variables
 let { Worker } = require('worker_threads')
-let SpotifyHandler = require('./source/spotify/funcs')
+let SpotifyHandler = require('./source/spotify')
 
 // define worker threads
 let startAPI = () => {

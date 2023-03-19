@@ -1,6 +1,6 @@
 // endpoint
 const Express = require("express")
-const SpotifyHandler = require("../../../spotify/funcs")
+const SpotifyHandler = require("../../../spotify")
 
 // base input for passing variables between files
 let base = null
