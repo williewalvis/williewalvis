@@ -104,15 +104,20 @@ module.exports = {
                                     $set: {
 
                                         // sub division of the document
-                                        "data": {
+                                        "accessToken": {
 
-                                            "accessToken": data.body['access_token'],
-                                            "refreshToken": data.body['refresh_token']
+                                            "key": data.body['access_token'],
+                                            "expires": data.body['expires_in'],
+                                            "retrieved": new Date()
 
                                         },
 
-                                        // set lastaccessed
-                                        "lastAccessed": new Date()
+                                        "refreshToken": {
+
+                                            "key": data.body['refresh_token'],
+                                            "retrieved": new Date()
+
+                                        }
 
                                     }
 
@@ -143,16 +148,29 @@ module.exports = {
                 } else {
 
                     // get the spotify data from the database
-                    let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" })).data
+                    let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" }))
 
                     // check if old access token exists
-                    if (spotifyJson["refreshToken"] != "") {
+                    if (spotifyJson["refreshToken"]["key"] != "") {
 
-                        // log current status
-                        console.log("Trying to use old refresh token to set Spotify API Credentials.")
+                        // check if access token exists
+                        if (typeof spotifyApi.getAccessToken() !== "undefined") {
+
+                            // remove the access token from the spotify api
+                            delete spotifyApi["_credentials"]["accessToken"]
+
+                        }
+
+                        // check if refresh token exists
+                        if (typeof spotifyApi.getRefreshToken() !== "undefined") {
+
+                            // remove the access token from the spotify api
+                            delete spotifyApi["_credentials"]["refreshToken"]
+
+                        }
 
                         // ! set refresh token (REFRESH TOKENS DO NOT EXPIRE AT ALL; NEED TO EXPLICITLY DISCONNECT)
-                        spotifyApi.setRefreshToken(spotifyJson["refreshToken"])
+                        spotifyApi.setRefreshToken(spotifyJson["refreshToken"]["key"])
 
                         // force run reauthentication
                         spotifyApi.refreshAccessToken().then(
@@ -176,10 +194,13 @@ module.exports = {
                                         $set: {
 
                                             // sub division of the document
-                                            "data.accessToken": data.body['access_token'],
+                                            "accessToken": {
 
-                                            // set lastaccessed
-                                            "lastAccessed": new Date()
+                                                "key": data.body['access_token'],
+                                                "expires": data.body['expires_in'],
+                                                "retrieved": new Date()
+
+                                            }
 
                                         }
 
@@ -188,7 +209,7 @@ module.exports = {
                                 )
 
                                 // log complete
-                                console.log("Successfully used old refresh token to set Spotify API Credentials.")
+                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now().toString())}`)
 
                                 // end function
                                 return resolve()
@@ -199,21 +220,21 @@ module.exports = {
                             function (err) {
 
                                 // throw error to function
-                                return reject("Could not successfully authenticate, manual required.")
+                                return reject("[SPOTIFY_ACCESS_REFRESH]: Could not refresh the access token.")
 
                             }
 
                         ).catch(err => {
 
                             // log could not complete
-                            console.log("Could not use old refresh token, please manually re-login to your account.")
+                            console.log(`[SPOTIFY_ACCESS_REFRESH]: Could not refresh the access token, this happened: \n${err}`)
 
                         })
 
                     } else {
 
                         // throw error
-                        return reject("No old refresh token could be found.")
+                        return reject("[SPOTIFY_ACCESS_REFRESH]: No old refresh token could be found.")
 
                     }
 
@@ -225,7 +246,7 @@ module.exports = {
                 console.error(err)
 
                 // reject the function
-                return reject("Could not complete the function.")
+                return reject("[SPOTIFY_ACCESS_REFRESH]: Could not complete the function.")
 
             }
 
@@ -264,18 +285,15 @@ module.exports = {
                     // function with error
                     function (err) {
 
-                        // log this error
-                        console.log(err)
-
                         // throw the error
-                        return reject("Could not complete web request.")
+                        return reject("[SPOTIFY_MUSIC_RETRIEVER]: Could not complete web request.")
 
                     }
 
                 ).catch(err => {
 
                     // throw error to function
-                    return reject("User is not authenticated, cannot get data.")
+                    return reject("[SPOTIFY_MUSIC_RETRIEVER]: User is not authenticated, cannot get data.")
 
                 })
 
@@ -285,7 +303,7 @@ module.exports = {
                 console.error(err)
 
                 // reject the function
-                return reject("Could not complete the function.")
+                return reject("[SPOTIFY_MUSIC_RETRIEVER]: Could not complete the function.")
 
             }
 

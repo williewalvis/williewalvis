@@ -36,7 +36,7 @@ module.exports = {
                     .then(async () => {
 
                         // send response to client
-                        res.send("Successfully authenticated.")
+                        res.send("[SPOTIFY_MANUAL_SET]: Successfully authenticated.")
 
                     })
 
@@ -44,24 +44,24 @@ module.exports = {
                     .catch(async (err) => {
 
                         // send response to client
-                        res.send("There was a problem while authenticating.")
+                        res.send("[SPOTIFY_MANUAL_SET]: There was a problem while authenticating.")
 
                     })
 
             } else {
 
                 // send response to client
-                res.send("No authentication was provided for this request.")
+                res.send("[SPOTIFY_MANUAL_SET]: No authentication was provided for this request.")
 
             }
 
         } catch (err) {
 
             // log error and send response
-            console.log("Error while running, x@214, " + new Date(Date.now()).toString())
+            console.log("[SPOTIFY_MANUAL_SET]: Error while running, x@214, " + new Date(Date.now()).toString())
 
             // send to response
-            res.send("The server could not respond.")
+            res.send("[SPOTIFY_MANUAL_SET]: The server could not respond.")
 
         }
 
