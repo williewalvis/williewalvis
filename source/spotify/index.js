@@ -1,5 +1,4 @@
 // variables
-const spotifyApi = require("./session/resources")
 const database = require("../database/connection")
 
 // module exports
@@ -18,6 +17,9 @@ module.exports = {
 
             // initiate try catch
             try {
+
+                // define spotify api instance
+                let spotifyApi = require("./session/resources")
 
                 // define url string
                 let url = spotifyApi.createAuthorizeURL(
@@ -72,6 +74,9 @@ module.exports = {
 
                 // get the database
                 let db = (await (await (new database).connect()).db(process.env.DATABASE_NAME))
+
+                // define spotify api instance
+                let spotifyApi = require("./session/resources")
 
                 // check if first time/initial run
                 if (!onStart || typeof onStart == "undefined") {
@@ -139,6 +144,8 @@ module.exports = {
 
                     // get the spotify data from the database
                     let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" })).data
+
+                    console.log(`loggging debug token: ${spotifyJson["refreshToken"]}`)
 
                     // check if old access token exists
                     if (spotifyJson["refreshToken"] != "") {
@@ -241,6 +248,9 @@ module.exports = {
 
             // initiate try catch
             try {
+
+                // define spotify api instance
+                let spotifyApi = require("./session/resources")
 
                 // get current play state from spotify servers
                 spotifyApi.getMyCurrentPlayingTrack().then(
