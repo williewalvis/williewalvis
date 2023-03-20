@@ -8,8 +8,6 @@ let spotifyApp = new SpotifyWebApi({
     clientSecret: process.env.CLIENT_SECRET
 })
 
-let alreadyRunning = false
-
 // module exports
 module.exports = {
 
@@ -317,10 +315,10 @@ module.exports = {
 }
 
 // run check to start refresher
-if (!alreadyRunning) {
+if (!process.env.SPOTIFY_REFRESHER_RUNNING) {
 
     // set running
-    alreadyRunning = true
+    process.env.SPOTIFY_REFRESHER_RUNNING = true
 
     // log that it is running
     console.log("[SPOTIFY_APP]: Running refresher.")
