@@ -8,6 +8,8 @@ let spotifyApp = new SpotifyWebApi({
     clientSecret: process.env.CLIENT_SECRET
 })
 
+let alreadyRunning = false
+
 // module exports
 module.exports = {
 
@@ -314,15 +316,23 @@ module.exports = {
 
 }
 
-// log that it is running
-console.log("[SPOTIFY_APP]: Running refresher.")
+// run check to start refresher
+if (!alreadyRunning) {
 
-// run function from the module exports
-setInterval(() => {
+    // set running
+    alreadyRunning = true
 
-    // fun refresher function
-    this.authorizationCodeGrant("refreshSequence")
-        .then(() => { void 0 })
-        .catch(err => { console.log(err) })
+    // log that it is running
+    console.log("[SPOTIFY_APP]: Running refresher.")
 
-}, 30 * 60000) // 30 minutes
+    // run function from the module exports
+    setInterval(() => {
+
+        // fun refresher function
+        this.authorizationCodeGrant("refreshSequence")
+            .then(() => { void 0 })
+            .catch(err => { console.log(err) })
+
+    }, 30 * 60000) // 30 minutes
+
+}
