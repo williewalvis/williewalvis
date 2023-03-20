@@ -209,7 +209,7 @@ module.exports = {
                                 )
 
                                 // log complete
-                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now().toString())}`)
+                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now()).toString()}`)
 
                                 // end function
                                 return resolve()
