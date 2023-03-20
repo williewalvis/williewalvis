@@ -156,6 +156,9 @@ module.exports = {
                         // check if access token exists
                         if (typeof spotifyApi.getAccessToken() !== "undefined") {
 
+                            // log deletion of old access token
+                            console.log("[SPOTIFY_ACCESS_REFRESH]: Deleting old access token.")
+
                             // remove the access token from the spotify api
                             delete spotifyApi["_credentials"]["accessToken"]
 
@@ -163,6 +166,9 @@ module.exports = {
 
                         // check if refresh token exists
                         if (typeof spotifyApi.getRefreshToken() !== "undefined") {
+
+                            // log deletion of old refresh token
+                            console.log("[SPOTIFY_ACCESS_REFRESH]: Deleting old refresh token.")
 
                             // remove the access token from the spotify api
                             delete spotifyApi["_credentials"]["refreshToken"]
@@ -209,7 +215,7 @@ module.exports = {
                                 )
 
                                 // log complete
-                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now()).toString()}`)
+                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now()).toLocaleTimeString()}`)
 
                                 // end function
                                 return resolve()

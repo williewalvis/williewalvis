@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 app.listen(port, async () => {
 
     // log web app status
-    console.log(`Web Online @ ${port}`)
+    console.log(`[NGINX_WEB_SERVER]: Web Online @ ${port}`)
 
     // wrap in try catch block
     await SpotifyHandler.authorizationCodeGrant("onStart", true)
