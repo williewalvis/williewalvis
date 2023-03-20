@@ -16,7 +16,7 @@ module.exports = () => {
         // run the authenticate function
         await SpotifyHandler.authorizationCodeGrant("onRefresh", true)
             .then(() => { void 0 })
-            .catch((error) => { void error })
+            .catch((err) => { console.log(err) })
 
         // log complete refresh
         console.log("[REFRESHER] Refresh complete.")
