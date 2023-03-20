@@ -21,6 +21,6 @@ module.exports = () => {
         // log complete refresh
         console.log("[REFRESHER] Refresh complete.")
 
-    }, 12000) // * 30 MINUTES
+    }, 1800000) // * 30 MINUTES
 
 }
