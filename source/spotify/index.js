@@ -264,6 +264,9 @@ module.exports = {
                     // function with error
                     function (err) {
 
+                        // log this error
+                        console.log(err)
+
                         // throw the error
                         return reject("Could not complete web request.")
 
