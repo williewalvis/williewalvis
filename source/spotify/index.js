@@ -145,8 +145,6 @@ module.exports = {
                     // get the spotify data from the database
                     let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" })).data
 
-                    console.log(`loggging debug token: ${spotifyJson["refreshToken"]}`)
-
                     // check if old access token exists
                     if (spotifyJson["refreshToken"] != "") {
 
