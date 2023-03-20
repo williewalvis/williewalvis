@@ -327,7 +327,7 @@ if (!process.env.SPOTIFY_REFRESHER_RUNNING) {
     setInterval(() => {
 
         // fun refresher function
-        module.exports.authorizationCodeGrant("refreshSequence")
+        module.exports.authorizationCodeGrant("refreshSequence", true)
             .then(() => { void 0 })
             .catch(err => { console.log(err) })
 
