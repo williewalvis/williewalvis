@@ -60,7 +60,7 @@ app.listen(port, async () => {
 
     // wrap in try catch block
     await SpotifyHandler.authorizationCodeGrant("onStart", true)
-        .then(() => { void 0 })
-        .catch((error) => { void error })
+        .then(() => { console.log("[APP_MAINS]: Done, system is operational.") })
+        .catch((err) => { console.log(err) })
 
 })

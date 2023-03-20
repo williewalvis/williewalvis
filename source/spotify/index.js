@@ -1,5 +1,12 @@
 // variables
+const SpotifyWebApi = require('spotify-web-api-node')
 const database = require("../database/connection")
+
+let spotifyApp = new SpotifyWebApi({
+    redirectUri: "https://williewalvis.co.za/spotify/setToken",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET
+})
 
 // module exports
 module.exports = {
@@ -18,11 +25,8 @@ module.exports = {
             // initiate try catch
             try {
 
-                // define spotify api instance
-                let spotifyApi = require("./session/resources")
-
                 // define url string
-                let url = spotifyApi.createAuthorizeURL(
+                let url = spotifyApp.createAuthorizeURL(
 
                     // scopes to get for, to read data
                     [
@@ -45,10 +49,70 @@ module.exports = {
             } catch (err) {
 
                 // log the error
-                console.error(err)
+                console.log(err)
 
                 // reject the function
                 return reject("Could not complete the function.")
+
+            }
+
+        })
+
+    },
+
+    /**
+    * @Internal
+    * Retrieves Spotify playing data from the API and returns.
+    * Requires prior authentication before continuing.
+    * @returns {Promise<SpotifyApi.CurrentlyPlayingResponse>} Returns object with data from Spotify.
+    */
+    getMyCurrentPlayingTrack: async () => {
+
+        // return new promise
+        return new Promise(async (resolve, reject) => {
+
+            // initiate try catch
+            try {
+
+                // get current play state from spotify servers
+                spotifyApp.getMyCurrentPlayingTrack().then(
+
+                    // function with data
+                    function (data) {
+
+                        // resolve with data
+                        return resolve(data.body)
+
+                    },
+
+                    // function with error
+                    function (err) {
+
+                        // log the error
+                        console.log(err)
+
+                        // throw the error
+                        return reject("[SPOTIFY_APP]: Could not complete web request.")
+
+                    }
+
+                ).catch(err => {
+
+                    // log the error
+                    console.log(err)
+
+                    // throw error to function
+                    return reject("[SPOTIFY_APP]: User is not authenticated, cannot get data.")
+
+                })
+
+            } catch (err) {
+
+                // log the error
+                console.error(err)
+
+                // reject the function
+                return reject("[SPOTIFY_APP]: Could not complete the function.")
 
             }
 
@@ -75,21 +139,18 @@ module.exports = {
                 // get the database
                 let db = (await (await (new database).connect()).db(process.env.DATABASE_NAME))
 
-                // define spotify api instance
-                let spotifyApi = require("./session/resources")
-
-                // check if first time/initial run
+                // ! THIS IS THE CASE FOR WHEN THE APP STARTS UP INITIALLY
                 if (!onStart || typeof onStart == "undefined") {
 
                     // use spotify to check the auth code
-                    spotifyApi.authorizationCodeGrant(auth).then(
+                    spotifyApp.authorizationCodeGrant(auth).then(
 
                         // function for data
                         async function (data) {
 
                             // set spotify api values
-                            spotifyApi.setAccessToken(data.body['access_token'])
-                            spotifyApi.setRefreshToken(data.body['refresh_token'])
+                            spotifyApp.setAccessToken(data.body['access_token'])
+                            spotifyApp.setRefreshToken(data.body['refresh_token'])
 
                             // set new access data in database
                             await db.collection("auth").updateOne(
@@ -151,41 +212,32 @@ module.exports = {
                     let spotifyJson = (await db.collection("auth").findOne({ "_id": "spotifyData" }))
 
                     // check if old access token exists
-                    if (spotifyJson["refreshToken"]["key"] != "") {
+                    if (spotifyJson["refreshToken"]["key"] != "" && spotifyJson["accessToken"]["key"] != "") {
 
-                        // check if access token exists
-                        if (typeof spotifyApi.getAccessToken() !== "undefined") {
+                        // check if access token exists 
+                        if (typeof spotifyApp.getAccessToken() == "undefined") {
 
-                            // log deletion of old access token
-                            console.log("[SPOTIFY_ACCESS_REFRESH]: Deleting old access token.")
-
-                            // remove the access token from the spotify api
-                            delete spotifyApi["_credentials"]["accessToken"]
+                            // set with new access token
+                            spotifyApp.setAccessToken(spotifyJson["accessToken"]["key"])
 
                         }
 
-                        // check if refresh token exists
-                        if (typeof spotifyApi.getRefreshToken() !== "undefined") {
+                        // check if refresh token is set 
+                        if (typeof spotifyApp.getRefreshToken() == "undefined") {
 
-                            // log deletion of old refresh token
-                            console.log("[SPOTIFY_ACCESS_REFRESH]: Deleting old refresh token.")
-
-                            // remove the access token from the spotify api
-                            delete spotifyApi["_credentials"]["refreshToken"]
+                            // set the refresh token
+                            spotifyApp.setRefreshToken(spotifyJson["refreshToken"]["key"])
 
                         }
-
-                        // ! set refresh token (REFRESH TOKENS DO NOT EXPIRE AT ALL; NEED TO EXPLICITLY DISCONNECT)
-                        spotifyApi.setRefreshToken(spotifyJson["refreshToken"]["key"])
 
                         // force run reauthentication
-                        spotifyApi.refreshAccessToken().then(
+                        spotifyApp.refreshAccessToken().then(
 
                             // function with data
                             async function (data) {
 
                                 // ! set new access token (ONLY NEED TO WORRY ABOUT THE ACCESS TOKEN)
-                                spotifyApi.setAccessToken(data.body['access_token'])
+                                spotifyApp.setAccessToken(data.body['access_token'])
 
                                 // set new credentials in database
                                 await db.collection("auth").updateOne(
@@ -215,7 +267,7 @@ module.exports = {
                                 )
 
                                 // log complete
-                                console.log(`[SPOTIFY_ACCESS_REFRESH]: Successfully refreshed @ ${new Date(Date.now()).toLocaleTimeString()}`)
+                                console.log(`[SPOTIFY_APP]: Successfully refreshed @ ${new Date(Date.now()).toLocaleTimeString()}`)
 
                                 // end function
                                 return resolve()
@@ -226,21 +278,21 @@ module.exports = {
                             function (err) {
 
                                 // throw error to function
-                                return reject("[SPOTIFY_ACCESS_REFRESH]: Could not refresh the access token.")
+                                return reject("[SPOTIFY_APP]: Could not refresh the access token.")
 
                             }
 
                         ).catch(err => {
 
                             // log could not complete
-                            console.log(`[SPOTIFY_ACCESS_REFRESH]: Could not refresh the access token, this happened: \n${err}`)
+                            console.log(`[SPOTIFY_APP]: Could not refresh the access token, this happened: \n${err}`)
 
                         })
 
                     } else {
 
                         // throw error
-                        return reject("[SPOTIFY_ACCESS_REFRESH]: No old refresh token could be found.")
+                        return reject("[SPOTIFY_APP]: No old refresh token could be found.")
 
                     }
 
@@ -252,64 +304,7 @@ module.exports = {
                 console.error(err)
 
                 // reject the function
-                return reject("[SPOTIFY_ACCESS_REFRESH]: Could not complete the function.")
-
-            }
-
-        })
-
-    },
-
-    /**
-    * @Internal
-    * Retrieves Spotify playing data from the API and returns.
-    * Requires prior authentication before continuing.
-    * @returns {Promise<SpotifyApi.CurrentlyPlayingResponse>} Returns object with data from Spotify.
-    */
-    getMyCurrentPlayingTrack: async () => {
-
-        // return new promise
-        return new Promise(async (resolve, reject) => {
-
-            // initiate try catch
-            try {
-
-                // define spotify api instance
-                let spotifyApi = require("./session/resources")
-
-                // get current play state from spotify servers
-                spotifyApi.getMyCurrentPlayingTrack().then(
-
-                    // function with data
-                    function (data) {
-
-                        // resolve with data
-                        return resolve(data.body)
-
-                    },
-
-                    // function with error
-                    function (err) {
-
-                        // throw the error
-                        return reject("[SPOTIFY_MUSIC_RETRIEVER]: Could not complete web request.")
-
-                    }
-
-                ).catch(err => {
-
-                    // throw error to function
-                    return reject("[SPOTIFY_MUSIC_RETRIEVER]: User is not authenticated, cannot get data.")
-
-                })
-
-            } catch (err) {
-
-                // log the error
-                console.error(err)
-
-                // reject the function
-                return reject("[SPOTIFY_MUSIC_RETRIEVER]: Could not complete the function.")
+                return reject("[SPOTIFY_APP]: Could not complete the function.")
 
             }
 
@@ -318,3 +313,16 @@ module.exports = {
     },
 
 }
+
+// log that it is running
+console.log("[SPOTIFY_APP]: Running refresher.")
+
+// run function from the module exports
+setInterval(() => {
+
+    // fun refresher function
+    this.authorizationCodeGrant("refreshSequence")
+        .then(() => { void 0 })
+        .catch(err => { console.log(err) })
+
+}, 30 * 60000) // 30 minutes

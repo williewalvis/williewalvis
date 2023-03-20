@@ -44,12 +44,7 @@ module.exports = {
                     console.log(err)
 
                     // send response to client
-                    res.status(400).json({
-
-                        "status": "error",
-                        "message": "There was a problem while getting the current playing track.",
-
-                    })
+                    res.send("[SPOTIFY_APP]: Could not retrieve data from Spotify.")
 
                 })
 
@@ -58,14 +53,8 @@ module.exports = {
             // log error and send response
             console.log("Error while running, x@214, " + new Date(Date.now()).toString())
 
-            // send to response
             // send response to client
-            res.status(400).json({
-
-                "status": "error",
-                "message": "The server could not provide a response.",
-
-            })
+            res.send("[SPOTIFY_APP]: The server could not send a response.")
 
         }
 
