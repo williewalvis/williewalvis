@@ -40,6 +40,9 @@ module.exports = {
                 // function when promise is rejected
                 .catch(async (err) => {
 
+                    // log the error
+                    console.log(err)
+
                     // send response to client
                     res.status(400).json({
 
