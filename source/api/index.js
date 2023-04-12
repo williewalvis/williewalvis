@@ -59,8 +59,8 @@ app.listen(port, async () => {
     console.log(`[NGINX_WEB_SERVER]: Web Online @ ${port}`)
 
     // wrap in try catch block
-    await SpotifyHandler.authorizationCodeGrant("onStart", true)
-        .then(() => { console.log("[APP_MAINS]: Done, system is operational.") })
-        .catch((err) => { console.log(err) })
+    // await SpotifyHandler.authorizationCodeGrant("onStart", true)
+    //     .then(() => { console.log("[APP_MAINS]: Done, system is operational.") })
+    //     .catch((err) => { console.log(err) })
 
 })

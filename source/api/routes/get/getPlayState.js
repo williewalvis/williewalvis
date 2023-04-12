@@ -23,40 +23,42 @@ module.exports = {
      */
     Function: async (req, res) => {
 
+        res.send("Request is not available, feature is disabled. [GET_PLAY_STATE]")
+
         // initiate try catch
-        try {
+        // try {
 
-            // run function to set auth token
-            SpotifyHandler.getMyCurrentPlayingTrack()
+        //     // run function to set auth token
+        //     SpotifyHandler.getMyCurrentPlayingTrack()
 
-                // function when promise is resolved
-                .then(async (data) => {
+        //         // function when promise is resolved
+        //         .then(async (data) => {
 
-                    // send response to client
-                    res.status(200).json({ data })
+        //             // send response to client
+        //             res.status(200).json({ data })
 
-                })
+        //         })
 
-                // function when promise is rejected
-                .catch(async (err) => {
+        //         // function when promise is rejected
+        //         .catch(async (err) => {
 
-                    // log the error
-                    console.log(err)
+        //             // log the error
+        //             console.log(err)
 
-                    // send response to client
-                    res.send("[SPOTIFY_APP]: Could not retrieve data from Spotify.")
+        //             // send response to client
+        //             res.send("[SPOTIFY_APP]: Could not retrieve data from Spotify.")
 
-                })
+        //         })
 
-        } catch (err) {
+        // } catch (err) {
 
-            // log error and send response
-            console.log("Error while running, x@214, " + new Date(Date.now()).toString())
+        //     // log error and send response
+        //     console.log("Error while running, x@214, " + new Date(Date.now()).toString())
 
-            // send response to client
-            res.send("[SPOTIFY_APP]: The server could not send a response.")
+        //     // send response to client
+        //     res.send("[SPOTIFY_APP]: The server could not send a response.")
 
-        }
+        // }
 
     },
 

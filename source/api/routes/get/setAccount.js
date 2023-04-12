@@ -23,47 +23,49 @@ module.exports = {
      */
     Function: async (req, res) => {
 
+        res.send("Request is not available, feature is disabled. [SET_ACCOUNT]")
+
         // initiate try catch
-        try {
+        // try {
 
-            // check if user is in query
-            if (req.query.user && req.query.user == process.env.SPOTIFYACCOUNT) {
+        //     // check if user is in query
+        //     if (req.query.user && req.query.user == process.env.SPOTIFYACCOUNT) {
 
-                // run function to set auth token
-                SpotifyHandler.createAuthorizeURL()
+        //         // run function to set auth token
+        //         SpotifyHandler.createAuthorizeURL()
 
-                    // function when promise is resolved
-                    .then(async (redir) => {
+        //             // function when promise is resolved
+        //             .then(async (redir) => {
 
-                        // send response to client
-                        res.redirect(redir)
+        //                 // send response to client
+        //                 res.redirect(redir)
 
-                    })
+        //             })
 
-                    // function when promise is rejected
-                    .catch(async (err) => {
+        //             // function when promise is rejected
+        //             .catch(async (err) => {
 
-                        // send response to client
-                        res.send("There was a problem while creating the link.")
+        //                 // send response to client
+        //                 res.send("There was a problem while creating the link.")
 
-                    })
+        //             })
 
-            } else {
+        //     } else {
 
-                // send response to client
-                res.send("No identification was provided for this request.")
+        //         // send response to client
+        //         res.send("No identification was provided for this request.")
 
-            }
+        //     }
 
-        } catch (err) {
+        // } catch (err) {
 
-            // log error and send response
-            console.log("Error while running, x@214, " + new Date(Date.now()).toString())
+        //     // log error and send response
+        //     console.log("Error while running, x@214, " + new Date(Date.now()).toString())
 
-            // send to response
-            res.send("The server could not respond.")
+        //     // send to response
+        //     res.send("The server could not respond.")
 
-        }
+        // }
 
     },
 

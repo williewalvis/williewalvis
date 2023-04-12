@@ -23,47 +23,49 @@ module.exports = {
      */
     Function: async (req, res) => {
 
+        res.send("Request is not available, feature is disabled. [SET_TOKEN]")
+
         // initiate try catch
-        try {
+        // try {
 
-            // check if code in query
-            if (req.query.code) {
+        //     // check if code in query
+        //     if (req.query.code) {
 
-                // run function to set auth token
-                SpotifyHandler.authorizationCodeGrant(req.query.code)
+        //         // run function to set auth token
+        //         SpotifyHandler.authorizationCodeGrant(req.query.code)
 
-                    // function when promise is resolved
-                    .then(async () => {
+        //             // function when promise is resolved
+        //             .then(async () => {
 
-                        // send response to client
-                        res.send("[SPOTIFY_APP]: Successfully authenticated.")
+        //                 // send response to client
+        //                 res.send("[SPOTIFY_APP]: Successfully authenticated.")
 
-                    })
+        //             })
 
-                    // function when promise is rejected
-                    .catch(async (err) => {
+        //             // function when promise is rejected
+        //             .catch(async (err) => {
 
-                        // send response to client
-                        res.send("[SPOTIFY_APP]: There was a problem while authenticating.")
+        //                 // send response to client
+        //                 res.send("[SPOTIFY_APP]: There was a problem while authenticating.")
 
-                    })
+        //             })
 
-            } else {
+        //     } else {
 
-                // send response to client
-                res.send("[SPOTIFY_APP]: No authentication was provided for this request.")
+        //         // send response to client
+        //         res.send("[SPOTIFY_APP]: No authentication was provided for this request.")
 
-            }
+        //     }
 
-        } catch (err) {
+        // } catch (err) {
 
-            // log error and send response
-            console.log("[SPOTIFY_APP]: Error while running, x@214, " + new Date(Date.now()).toString())
+        //     // log error and send response
+        //     console.log("[SPOTIFY_APP]: Error while running, x@214, " + new Date(Date.now()).toString())
 
-            // send to response
-            res.send("[SPOTIFY_APP]: The server could not respond.")
+        //     // send to response
+        //     res.send("[SPOTIFY_APP]: The server could not respond.")
 
-        }
+        // }
 
     },
 
