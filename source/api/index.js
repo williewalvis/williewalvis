@@ -3,8 +3,6 @@ const express = require('express')
 const pretty = require("express-prettify")
 const ip = require("express-ip")
 
-const SpotifyHandler = require("../spotify")
-
 const app = express()
 
 const path = require('path')
@@ -57,10 +55,5 @@ app.listen(port, async () => {
 
     // log web app status
     console.log(`[NGINX_WEB_SERVER]: Web Online @ ${port}`)
-
-    // wrap in try catch block
-    // await SpotifyHandler.authorizationCodeGrant("onStart", true)
-    //     .then(() => { console.log("[APP_MAINS]: Done, system is operational.") })
-    //     .catch((err) => { console.log(err) })
 
 })

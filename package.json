@@ -24,8 +24,6 @@
     "express-prettify": "^0.1.1",
     "fs": "^0.0.1-security",
     "mongodb": "^5.1.0",
-    "path": "^0.12.7",
-    "spotify-web-api-node": "^5.0.2",
-    "websocket": "^1.0.34"
+    "path": "^0.12.7"
   }
 }
