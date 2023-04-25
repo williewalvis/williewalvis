@@ -20,30 +20,112 @@ body {
 }
 
 /* THIS IS FOR THE SPOTIFY MUSIC PLAYER CARD ON HOME SCREEN */
-.spotify-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  width: 30vh;
-  height: 10vh;
-  background-color: #2f303a;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.3);
-  margin: 0 auto;
-  margin-top: -150px;
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #333232;
+  cursor: default;
 }
 
-.spotify-card img {
-  width: 30vh;
-  height: 10vh;
-  border-radius: 10px;
-  object-fit: cover;
-  background: rgba(0, 0, 0, 0.904);
-  z-index: 100;
+h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8pt;
+  font-weight: 400;
+  cursor: default;
 }
 
-.spotify-image-overlay {}
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11pt;
+  font-weight: 300;
+  color: #333232;
+  cursor: default;
+}
+
+.player {
+  height: 125px;
+  width: 330px;
+  background-color: #161616;
+  position: absolute;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  top: 87%;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  /* -webkit-transform: translate(-50%, -50%); */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.player ul {
+  list-style: none;
+}
+
+.player ul li {
+  display: inline-block;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cover img {
+  height: 125px;
+  width: 125px;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.info h4 {
+  margin-top: 20px;
+  margin-left: 110px;
+  line-height: 0;
+  color: #fff;
+}
+
+.info h5 {
+  margin-left: 110px;
+  line-height: 25px;
+  color: #636367;
+}
+
+.info h6 {
+  margin-left: 110px;
+  color: #fff;
+}
+
+.button-items {
+  margin-left: 110px;
+}
+
+#slider {
+  width: 175px;
+  height: 4px;
+  background: #252525;
+  border-radius: 2px;
+}
+
+#slider div {
+  width: 4px;
+  height: 4px;
+  margin-top: 1px;
+  background: #6da5ef;
+  border-radius: 2px;
+}
+
+#timer {
+  color: #fff;
+  line-height: 25px;
+  font-size: 7pt;
+  float: left;
+  font-family: 'Montserrat', sans-serif;
+}
 
 /* THIS IS THE FULLSCREEN NAVBAR */
 .section-center {
