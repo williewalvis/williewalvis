@@ -94,15 +94,17 @@
       </div>
 
       <!-- CARD PART FOR MUSIC DISPLAY -->
-      <div class="player">
+      <div class="player" id="player_card">
         <ul>
-          <li class="cover"><img
-              src="http://i1285.photobucket.com/albums/a583/TheGreatOzz1/Hosted-Images/Noisy-Freeks-Image_zps4kilrxml.png" />
+          <li class="cover"><img id="album_image"
+              src="https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png" />
           </li>
           <li class="info">
-            <h4>The Noisy Freaks</h4>
-            <h5>Premiere</h5>
-            <b><h6>I Need You Back</h6></b>
+            <h4 id="artist_name"></h4>
+            <h5 id="album_name"></h5>
+            <b>
+              <h6 id="song_name"></h6>
+            </b>
 
             <div class="button-items">
               <div id="slider">
@@ -114,6 +116,10 @@
           </li>
         </ul>
       </div>
+
+      <a href="#" class="spotify-redirect" id="spotify_redirect">
+        <img src="./img/spotify.png" alt="spotifyImage">
+      </a>
 
     </section>
 
@@ -133,6 +139,7 @@
 
   <!-- LOAD JQUERY AND EXTERNAL JAVASCRIPT FILES -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
   <script src="./js/script.js"></script>
 
 </body>

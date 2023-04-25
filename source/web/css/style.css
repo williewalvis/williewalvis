@@ -19,6 +19,42 @@ body {
   width: 100%;
 }
 
+/* THIS IS FOR THE GO TO SONG ON SPOTIFY BUTTON */
+.spotify-redirect {
+  height: 50px;
+  width: 250px;
+  position: absolute;
+  margin-top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  background-color: #161616;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.spotify-redirect:hover {
+  background-color: #1ED760;
+}
+
+.spotify-redirect img {
+  color: #fff;
+  max-width: 35%;
+  height: auto;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.spotify-redirect:hover img {
+  -webkit-filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(153deg) brightness(85%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(153deg) brightness(85%) contrast(101%);
+}
+
 /* THIS IS FOR THE SPOTIFY MUSIC PLAYER CARD ON HOME SCREEN */
 h4 {
   font-family: 'Montserrat', sans-serif;
@@ -60,6 +96,7 @@ h6 {
   transform: translate(-50%, -50%);
   /* -webkit-transform: translate(-50%, -50%); */
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  opacity: 0;
 }
 
 .player ul {
@@ -115,7 +152,7 @@ h6 {
   width: 4px;
   height: 4px;
   margin-top: 1px;
-  background: #6da5ef;
+  background: #fff;
   border-radius: 2px;
 }
 
