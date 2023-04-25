@@ -150,12 +150,8 @@ if ("WebSocket" in window) {
       // define the data
       let is_playing = received_msg["is_playing"]
 
-      console.log(is_playing)
-
       // check if playing
       if (is_playing) {
-
-        console.log("?")
 
         // define all the data variables
         let artist_name = received_msg["item"]["album"]["artists"][0]["name"]
