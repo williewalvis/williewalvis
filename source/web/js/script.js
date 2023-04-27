@@ -94,7 +94,7 @@ transitionsSet.forEach((transition) => {
 
     // check for promise finish
     promise.then(() => { $('#menu-icon').prop('checked', false); $(document).prop('title', `WillieWalvis • ${transition.page}`) })
-  
+
   })
 
 })
@@ -160,11 +160,15 @@ if ("WebSocket" in window) {
         let song_name = received_msg["item"]["name"]
         let song_progress = received_msg["progress_ms"]
         let song_duration = received_msg["item"]["duration_ms"]
+        let song_uri = received_msg["item"]["uri"]
 
         // do length checks on all data that is necessary
         if (song_name.length > 20) { song_name = song_name.substring(0, 20) + "..." }
         if (artist_name.length > 20) { artist_name = artist_name.substring(0, 20) + "..." }
         if (album_name.length > 25) { album_name = album_name.substring(0, 25) + "..." }
+
+        // set spotify redirect button uri
+        $("#spotify_redirect").attr("href", song_uri)
 
         // set the data
         $("#album_image").attr("src", album_image)

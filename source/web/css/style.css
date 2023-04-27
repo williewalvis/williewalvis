@@ -20,27 +20,30 @@ body {
 }
 
 /* THIS IS FOR THE GO TO SONG ON SPOTIFY BUTTON */
-/* .spotify-redirect {
-  height: 50px;
-  width: 250px;
+.spotify-redirect {
+  height: 40px;
+  width: 290px;
   position: absolute;
   margin-top: -25px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
-  background-color: #161616;
+  background-color: #0F0F0F;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   transition: all 0.2s ease;
-  opacity: 0;
 }
 
 .spotify-redirect:hover {
   background-color: #1ED760;
 }
 
+.spotify-redirect:active {
+  margin-top: -23px;
+}
+
 .spotify-redirect img {
   color: #fff;
-  max-width: 35%;
+  max-width: 25%;
   height: auto;
   margin: 0;
   position: absolute;
@@ -51,9 +54,9 @@ body {
 }
 
 .spotify-redirect:hover img {
-  -webkit-filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(153deg) brightness(85%) contrast(101%);
-  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(153deg) brightness(85%) contrast(101%);
-} */
+  -webkit-filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
+}
 
 /* THIS IS FOR THE SPOTIFY MUSIC PLAYER CARD ON HOME SCREEN */
 h4 {
@@ -83,7 +86,7 @@ h6 {
 .player {
   height: 125px;
   width: 330px;
-  background-color: #161616;
+  background-color: #0F0F0F;
   position: absolute;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -162,6 +165,153 @@ h6 {
   font-size: 7pt;
   float: left;
   font-family: 'Montserrat', sans-serif;
+}
+
+/* design styles for entire spotify interface part; mobile screens */
+@media screen and (max-width: 991px) {
+
+  .spotify-redirect {
+    height: 60px;
+    width: 400px;
+    position: absolute;
+    margin-top: -33px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    background-color: #0F0F0F;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    transition: all 0.2s ease;
+  }
+
+  .spotify-redirect:hover {
+    background-color: #1ED760;
+  }
+
+  .spotify-redirect:active {
+    margin-top: -29px;
+  }
+
+  .spotify-redirect img {
+    color: #fff;
+    max-width: 25%;
+    height: auto;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .spotify-redirect:hover img {
+    -webkit-filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1);
+  }
+
+  .player {
+
+    height: 175px;
+    width: 460px;
+    background-color: #0F0F0F;
+    position: absolute;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    top: 87%;
+    left: 50%;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    /* -webkit-transform: translate(-50%, -50%); */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    opacity: 0;
+
+  }
+
+  .player ul {
+    list-style: none;
+  }
+
+  .player ul li {
+    display: inline-block;
+  }
+
+  .cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .cover img {
+    height: 175px;
+    width: 175px;
+    border-radius: 20px 0px 0px 20px;
+  }
+
+  .info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333232;
+    cursor: default;
+    margin-top: 25px;
+    margin-left: 160px;
+    line-height: 0;
+    color: #fff;
+  }
+
+  .info h5 {
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13pt;
+    font-weight: 400;
+    cursor: default;
+    margin-left: 160px;
+    line-height: 25px;
+    color: #636367;
+  }
+
+  .info h6 {
+    margin-top: 35px;
+    /* line-height: 60px; */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16pt;
+    font-weight: 300;
+    color: #333232;
+    cursor: default;
+    margin-left: 160px;
+    color: #fff;
+  }
+
+  .button-items {
+    margin-left: 160px;
+  }
+
+  #slider {
+    width: 250px;
+    height: 6px;
+    background: #252525;
+    border-radius: 2px;
+  }
+
+  #slider div {
+    width: 4px;
+    height: 6px;
+    margin-top: 1px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  #timer {
+    color: #fff;
+    line-height: 35px;
+    font-size: 11pt;
+    float: left;
+    font-family: 'Montserrat', sans-serif;
+  }
+
 }
 
 /* THIS IS THE FULLSCREEN NAVBAR */
@@ -285,7 +435,7 @@ h1 {
   z-index: 9;
   overflow: hidden;
   box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.3);
-  background-color: #333232;
+  background-color: #0F0F0F;
   animation: border-transform 7s linear infinite;
   transition: top 350ms 1100ms cubic-bezier(0.23, 1, 0.32, 1),
     right 350ms 1100ms cubic-bezier(0.23, 1, 0.32, 1),
@@ -396,7 +546,7 @@ h1 {
 
 .nav ul li a:hover {
   text-decoration: none;
-  color: #0F0F0F;
+  color: #161616;
 }
 
 .nav ul li a:after {
@@ -408,7 +558,7 @@ h1 {
   margin-top: -1vh;
   width: 0;
   left: 0;
-  background-color: #333232;
+  background-color: #161616;
   opacity: 0.8;
   transition: width 250ms linear;
 }
@@ -532,7 +682,7 @@ h1 {
 }
 
 .right {
-  color: #333232;
+  color: #161616;
   transform: skew(0deg, 15deg);
 }
 
