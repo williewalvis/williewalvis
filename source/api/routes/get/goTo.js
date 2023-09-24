@@ -22,7 +22,8 @@ module.exports = {
         // initiate try catch
         try {
             
-            console.log(req.query)
+            console.log(req.query.key)
+            console.log(process.env.BELLA_KEY)
 
             // check the parameters to see where to go
             if (req.params.name.toLowerCase() == "bella" && req.query.key == process.env.BELLA_KEY) {
