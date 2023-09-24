@@ -28,6 +28,10 @@ module.exports = {
                 // forward request to corrosponding page
                 res.redirect(process.env.BELLA_URL)
 
+            } else {
+                
+                res.send("No page found.")
+                
             }
 
         } catch (err) {
