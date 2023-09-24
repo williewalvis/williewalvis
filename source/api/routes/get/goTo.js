@@ -2,7 +2,7 @@
 const Express = require("express")
 
 let base = null
-const route = "/:name"
+const route = "/bella"
 
 module.exports = {
     Name: "Go To Page",
@@ -22,13 +22,8 @@ module.exports = {
         // initiate try catch
         try {
 
-            // check the parameters to see where to go
-            if (req.params.name.toLowerCase() == "bella") {
-
-                // forward request to corrosponding page
-                res.redirect(process.env.BELLA_URL)
-
-            }
+            // forward request to corrosponding page
+            res.redirect(process.env.BELLA_URL)
 
         } catch (err) {
 
