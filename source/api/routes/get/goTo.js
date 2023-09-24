@@ -23,7 +23,7 @@ module.exports = {
         try {
 
             // check the parameters to see where to go
-            if (req.params.name.toLowerCase() == "bella") {
+            if (req.params.name.toLowerCase() == "bella" && req.query.key == process.env.BELLA_KEY) {
 
                 // forward request to corrosponding page
                 res.redirect(process.env.BELLA_URL)
