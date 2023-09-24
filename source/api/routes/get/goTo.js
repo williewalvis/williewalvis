@@ -22,6 +22,9 @@ module.exports = {
         // initiate try catch
         try {
 
+            console.log("?")
+            console.log(process.env.BELLA_URL)
+
             // forward request to corrosponding page
             res.redirect(process.env.BELLA_URL)
 
