@@ -105,7 +105,7 @@ body {
 }
 
 .insta-redirect:active {
-  margin-top: -23px;
+  top: 40px;
 }
 
 .insta-redirect img {
