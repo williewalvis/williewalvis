@@ -2,7 +2,7 @@
   "name": "williewalvis",
   "version": "1.0.0",
   "description": "everything about me",
-  "main": "willie.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -25,6 +25,3 @@ let startAPI = () => {
 
 // start processes
 startAPI()
-
-// status code for pterodactyl daemon
-console.log("[PT_DAEMON] Finished sync, calm down.")
