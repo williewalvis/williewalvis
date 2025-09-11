@@ -128,7 +128,7 @@ let timelineWidth = $("#slider").width() - $("#elapsed").width()
 if ("WebSocket" in window) {
 
   // define the socket connection
-  let ws = new WebSocket("wss://socket.williewalvis.co.za/")
+  let ws = new WebSocket("wss://socket.malherbes.co/")
 
   // add function to socket opening
   ws.onopen = () => {
