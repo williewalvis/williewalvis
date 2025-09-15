@@ -564,7 +564,7 @@ h1 {
 .menu-icon:checked+label,
 .menu-icon:not(:checked)+label {
   position: fixed;
-  top: 63px;
+  top: 105px;
   right: 75px;
   display: block;
   width: 30px;
@@ -638,7 +638,7 @@ h1 {
 
 .nav {
   position: fixed;
-  top: 33px;
+  top: 75px;
   right: 50px;
   display: block;
   width: 80px;
@@ -816,7 +816,7 @@ h1 {
 }
 
 .logo img {
-  height: 26px;
+  height: 125px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
