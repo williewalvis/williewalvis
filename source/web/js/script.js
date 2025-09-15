@@ -93,7 +93,7 @@ transitionsSet.forEach((transition) => {
     })
 
     // check for promise finish
-    // promise.then(() => { $('#menu-icon').prop('checked', false); $(document).prop('title', `WillieWalvis • ${transition.page}`) }) //! STOP SHOWING THE DOCUMENT TITLE
+    promise.then(() => { $('#menu-icon').prop('checked', false); }) //! STOP SHOWING THE DOCUMENT TITLE $(document).prop('title', `WillieWalvis • ${transition.page}`)
 
   })
 
