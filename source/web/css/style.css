@@ -1248,89 +1248,172 @@ body .easytransitions section:nth-of-type(10) {
   background: #d0c7c2;
 } */
 
-/* CONTACT SECTION (structured, same aesthetic) */
+/* =========================
+   CONTACT SECTION (CLEAN)
+   ========================= */
+
 .contact-flexbox {
-  width: min(1100px, 90vw);
+  width: min(1100px, 92vw);
 }
 
+/* Title + small sentence under it */
+.contact-heading {
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(22px, 2.4vw, 34px);
+  letter-spacing: -0.02em;
+}
+
+.contact-subheading {
+  margin: 0 0 22px 0;
+  text-align: center;
+  color: rgba(255,255,255,0.60);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+/* Grid */
 .contact-grid {
   display: flex;
-  gap: 22px;
-  flex-wrap: wrap;
+  gap: 26px;
   justify-content: center;
   align-items: stretch;
+  flex-wrap: wrap;
 }
 
-.contact-card {
-  background-color: #0F0F0F;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 26px 28px;
-  width: min(520px, 90vw);
+/* Card */
+.contact-box {
+  width: min(520px, 92vw);
+  border-radius: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(15, 15, 15, 0.55);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.contact-box:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Image */
+.contact-box__media {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.contact-box__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: var(--focus, 50% 25%);
+  filter: contrast(1.05) brightness(0.92);
+}
+
+/* Michael: "zoomed out" look using contain + blurred background fill */
+.contact-box--michael .contact-box__media {
+  position: relative;
+  overflow: hidden;
+}
+
+/* blurred background */
+.contact-box--michael .contact-box__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--img);
+  background-size: cover;
+  background-position: 50% 20%;
+  filter: blur(18px) brightness(0.65);
+  transform: scale(1.15);
+}
+
+/* actual image: not zoomed */
+.contact-box--michael .contact-box__media img {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+  object-position: 50% 50%;
+  filter: none; /* remove your dark filter so face looks normal */
+}
+
+
+/* Body */
+.contact-box__body {
+  padding: 14px 18px 14px;
   text-align: center;
 }
 
-.contact-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255,255,255,0.12);
-}
-
-.contact-topline {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: baseline;
-  justify-content: center;
-}
-
-.contact-name {
+.contact-box__name {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: clamp(22px, 3vw, 34px);
+  font-size: clamp(18px, 2.1vw, 26px);
+  line-height: 1.05;
+  margin: 0;
+  color: #fff;
   letter-spacing: -0.02em;
-  text-transform: none;
-  color: #fff;
 }
 
-.contact-dot {
-  color: rgba(255,255,255,0.35);
-  font-weight: 700;
-}
-
-.contact-email {
-  font-family: 'Montserrat', sans-serif;
+.contact-box__title {
+  margin-top: 6px;
+  font-size: 0.95rem;
   font-weight: 500;
-  font-size: clamp(16px, 2vw, 18px);
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-  padding-bottom: 2px;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.contact-email:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.4);
-}
-
-.contact-email:focus-visible {
-  outline: 2px solid rgba(255,255,255,0.35);
-  outline-offset: 6px;
-  border-bottom-color: transparent;
-}
-
-.contact-role {
-  margin-top: 10px;
-  color: rgba(255,255,255,0.55);
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.58);
   letter-spacing: 0.02em;
 }
 
+/* Divider between title and email */
+.contact-box__divider {
+  width: min(240px, 70%);
+  height: 1px;
+  margin: 12px auto 10px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+}
+
+/* Email */
+.contact-box__email {
+  display: inline-block;
+  margin-top: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-box__email:hover {
+  color: #fff;
+}
+
+.contact-box__email:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.35);
+  outline-offset: 6px;
+}
+
+/* Hint */
 .contact-hint {
   margin-top: 18px;
   text-align: center;
-  color: rgb(196, 196, 196);
+  color: rgba(255,255,255,0.55);
   font-size: 0.9rem;
+}
+
+/* Mobile tuning */
+@media screen and (max-width: 991px) {
+  .contact-box__media { height: 220px; }
+  .contact-hint { display: none; }
+  .contact-subheading { margin-bottom: 18px; }
 }
