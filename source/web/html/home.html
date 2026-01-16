@@ -41,8 +41,8 @@
   <nav class="nav">
     <ul class="pt-5">
       <li><a class="transition_button_trigger_home" href="javascript:void(0)">Home</a></li>
-      <li><a class="transition_button_trigger_work" href="javascript:void(0)">Work</a></li>
-      <li><a class="transition_button_trigger_contact" href="javascript:void(0)">Contact</a></li>
+      <li><a class="transition_button_trigger_work" href="javascript:void(0)">Partners</a></li>
+      <li><a class="transition_button_trigger_contact" href="javascript:void(0)">The Team</a></li>
     </ul>
   </nav>
 
@@ -162,27 +162,48 @@
     </section>
 
     <section id="contact_section_transition" data-transition='wipe_left'>
-     
-	<div class="flexbox contact-flexbox">
+
+  <div class="flexbox contact-flexbox">
+
+    <h2 class="contact-heading">The Team</h2>
+    <p class="contact-subheading">The people behind Malherbes Co. — building and supporting your IT stack.</p>
 
     <div class="contact-grid">
 
-      <div class="contact-card">
-        <div class="contact-topline">
-          <span class="contact-name">Wilmar Malherbe</span>
-          <span class="contact-dot">•</span>
-          <a class="contact-email" href="mailto:wilmar@malherbes.co">wilmar@malherbes.co</a>
+      <!-- Wilmar -->
+      <div class="contact-box" style="--focus: 50% 70%;">
+        <div class="contact-box__media">
+          <img src="../img/people/wilmar.jpg" alt="Wilmar Malherbe">
         </div>
-        <div class="contact-role">Director &amp; Developer</div>
+
+        <div class="contact-box__body">
+          <div class="contact-box__name">Wilmar Malherbe</div>
+          <div class="contact-box__title">Director &amp; Developer</div>
+
+          <div class="contact-box__divider"></div>
+
+          <a class="contact-box__email" href="mailto:wilmar@malherbes.co">
+            wilmar@malherbes.co
+          </a>
+        </div>
       </div>
 
-      <div class="contact-card">
-        <div class="contact-topline">
-          <span class="contact-name">Michael Coates</span>
-          <span class="contact-dot">•</span>
-          <a class="contact-email" href="mailto:michael@malherbes.co">michael@malherbes.co</a>
+      <!-- Michael -->
+      <div class="contact-box contact-box--michael" style="--img: url('../img/people/michael.jpg');">
+        <div class="contact-box__media">
+          <img src="../img/people/michael.jpg" alt="Michael Coates">
         </div>
-        <div class="contact-role">Brand Manager</div>
+
+        <div class="contact-box__body">
+          <div class="contact-box__name">Michael Coates</div>
+          <div class="contact-box__title">Brand Manager</div>
+
+          <div class="contact-box__divider"></div>
+
+          <a class="contact-box__email" href="mailto:michael@malherbes.co">
+            michael@malherbes.co
+          </a>
+        </div>
       </div>
 
     </div>
@@ -191,7 +212,11 @@
       Clicking an email will open your preferred mail application.
     </p>
 
-    </section>
+  </div>
+
+</section>
+
+
 
   </div>
 
