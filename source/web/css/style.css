@@ -744,6 +744,10 @@ h1 {
   transition-delay: 100ms;
 }
 
+.nav ul li:nth-child(4) {
+  transition-delay: 50ms;
+}
+
 .nav ul li a {
   font-family: 'Montserrat', sans-serif;
   font-size: 9vh;
@@ -1268,12 +1272,13 @@ body .easytransitions section:nth-of-type(10) {
 }
 
 .contact-subheading {
-  margin: 0 0 22px 0;
+  display: block;
+  width: 100%;
   text-align: center;
-  color: rgba(255,255,255,0.60);
-  font-size: 1rem;
-  line-height: 1.5;
-  max-width: 720px;
+  margin: 10px auto 24px;
+  max-width: 820px;   /* optional, keeps it readable */
+  padding: 0 18px;    /* prevents edge hugging on small screens */
+  color: rgba(255,255,255,0.55);
 }
 
 /* Grid */
@@ -1317,10 +1322,14 @@ body .easytransitions section:nth-of-type(10) {
   width: 100%;
   height: 100%;
   display: block;
+
   object-fit: cover;
   object-position: var(--focus, 50% 25%);
-  filter: contrast(1.05) brightness(0.92);
+
+  /* slightly cleaner look */
+  filter: contrast(1.05) brightness(0.95);
 }
+
 
 /* Michael: "zoomed out" look using contain + blurred background fill */
 .contact-box--michael .contact-box__media {
@@ -1347,6 +1356,33 @@ body .easytransitions section:nth-of-type(10) {
   object-fit: contain;
   object-position: 50% 50%;
   filter: none; /* remove your dark filter so face looks normal */
+}
+
+/* Ethan: "contain + blurred background" framing */
+.contact-box--ethan .contact-box__media {
+  position: relative;
+  overflow: hidden;
+}
+
+/* blurred background */
+.contact-box--ethan .contact-box__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--img);
+  background-size: cover;
+  background-position: 50% 50%;
+  filter: blur(18px) brightness(0.65);
+  transform: scale(1.15);
+}
+
+/* actual image: not zoomed */
+.contact-box--ethan .contact-box__media img {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+  object-position: 50% 50%;
+  filter: none;
 }
 
 
@@ -1417,3 +1453,790 @@ body .easytransitions section:nth-of-type(10) {
   .contact-hint { display: none; }
   .contact-subheading { margin-bottom: 18px; }
 }
+
+
+/* =========================
+   SPLASH TYPE INTRO (GSAP + TypeIt)
+   ========================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+#splash .splash-inner {
+  padding: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.splash-type {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #0F0F0F; /* matches your site background */
+  font-size: clamp(22px, 3.2vw, 44px);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* TypeIt cursor styling */
+.ti-cursor {
+  display: inline-block;
+  margin-left: 6px;
+  color: #0F0F0F;
+  font-weight: 900;
+  animation: tiBlink 650ms step-end infinite;
+}
+
+/* Emphasis styling inside typed text */
+.splash-em {
+  font-weight: 900;
+}
+
+.splash-soft {
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+
+@keyframes tiBlink {
+  50% { opacity: 0; }
+}
+
+/* Reduced motion: no blinking */
+@media (prefers-reduced-motion: reduce) {
+  .ti-cursor { animation: none; }
+}
+
+/* =========================
+   OFFERS SECTION (M.Co) — UPDATED
+   ========================= */
+
+.offers-flexbox {
+  width: min(1100px, 92vw);
+}
+
+/* Normal state wrapper */
+.offers-stage {
+  width: 100%;
+}
+
+/* Grid of 6 cards */
+.offers-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 6px;
+}
+
+@media (max-width: 991px) {
+  .offers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .offers-grid { grid-template-columns: 1fr; }
+}
+
+/* Card base */
+.offer-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(15, 15, 15, 0.55);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.55);
+
+  padding: 18px 18px 20px;
+  text-align: left;
+
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  column-gap: 14px;
+  row-gap: 6px;
+  align-items: center;
+
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  color: #fff;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.offer-card:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.35);
+  outline-offset: 6px;
+}
+
+.offer-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+}
+
+.offer-icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: rgba(255,255,255,0.92);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.offer-title {
+  grid-column: 2;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  margin-top: 2px;
+}
+
+.offer-subtitle {
+  grid-column: 2;
+  color: rgba(255,255,255,0.60);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+/* Cursor heartbeat pulse */
+.offer-card::after {
+  content: "";
+  position: absolute;
+  left: var(--mx, 50%);
+  top: var(--my, 50%);
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%) scale(0.85);
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.12) 0%,
+    rgba(255,255,255,0.07) 25%,
+    rgba(255,255,255,0.00) 60%
+  );
+}
+
+.offer-card:hover::after {
+  opacity: 1;
+  animation: offerPulse 1.45s ease-in-out infinite;
+}
+
+@keyframes offerPulse {
+  0%   { transform: translate(-50%, -50%) scale(0.82); opacity: 0.55; }
+  50%  { transform: translate(-50%, -50%) scale(1.08); opacity: 0.22; }
+  100% { transform: translate(-50%, -50%) scale(0.82); opacity: 0.55; }
+}
+
+/* Click ripple */
+.offer-card::before {
+  content: "";
+  position: absolute;
+  left: var(--cx, 50%);
+  top: var(--cy, 50%);
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.08) 30%,
+    rgba(255,255,255,0.00) 70%
+  );
+}
+
+.offer-card.is-clicked::before {
+  opacity: 1;
+  animation: offerClickRipple 520ms ease-out forwards;
+}
+
+@keyframes offerClickRipple {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.55; }
+  100% { transform: translate(-50%, -50%) scale(28); opacity: 0; }
+}
+
+/* =========================
+   EXPANDED MODAL (CENTERED)
+   ========================= */
+
+.offers-detail {
+  position: absolute;
+  inset: 0;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.offers-detail.is-open {
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+}
+
+.offers-detail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+}
+
+/* The main panel in the middle */
+.offers-detail-panel {
+  position: relative;
+  width: min(1320px, 94vw);
+  border-radius: 22px;
+  border: 2px solid rgba(255,255,255,0.14);
+  background: rgba(15, 15, 15, 0.60);
+  box-shadow: 0px 0px 18px rgba(0,0,0,0.55);
+
+  padding: clamp(16px, 2.2vw, 26px);
+}
+
+/* Close button */
+.offers-detail-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.85);
+  font-size: 20px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.offers-detail-close:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Top row: selected card + description */
+.offers-detail-top {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 991px) {
+  .offers-detail-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Slot where the selected card animates into */
+.offers-selected-slot {
+  width: 100%;
+  min-height: 110px;
+}
+
+/* Description card */
+.offers-desc-card {
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  padding: 16px 16px 14px;
+}
+
+.offers-desc-kicker {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
+}
+
+.offers-desc-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.05;
+}
+
+.offers-desc-text {
+  margin-top: 8px;
+  color: rgba(255,255,255,0.62);
+  max-width: 820px;
+  line-height: 1.5;
+}
+
+.offers-desc-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.offers-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.18);
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.72);
+}
+
+/* Plans heading */
+.offers-plans-heading {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.offers-plans-title {
+  font-weight: 300;
+  font-size: clamp(22px, 3vw, 42px);
+  line-height: 1;
+  opacity: 0.85;
+}
+
+/* Tier cards */
+.offers-plans-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1100px) {
+  .offers-plans-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .offers-plans-grid { grid-template-columns: 1fr; }
+}
+
+.plan-card {
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.20);
+  padding: 16px 16px 14px;
+  text-align: left;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.plan-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plan-title {
+  font-weight: 900;
+  font-size: 1.05rem;
+}
+
+.plan-badge {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.70);
+}
+
+.plan-price {
+  margin-top: 10px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.plan-features {
+  margin-top: 10px;
+  padding-left: 18px;
+  color: rgba(255,255,255,0.62);
+}
+
+.plan-features li {
+  margin: 7px 0;
+}
+
+.plan-section {
+  margin-top: 10px;
+}
+
+.plan-section-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
+}
+
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .offer-card:hover::after { animation: none; }
+  .offer-card.is-clicked::before { animation: none; opacity: 0; }
+}
+
+
+/* Hide the underlying offers grid instantly when modal opens */
+.offers-stage.is-dimmed {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.995);
+}
+
+/* Make sure the panel never exceeds the viewport */
+#offersDetail .offers-detail-panel{
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better responsive plan columns (wrap cleanly as you scale down) */
+.offers-plans-grid{
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+@media (max-width: 560px){
+  #offersDetail .offers-detail-panel{
+    max-height: calc(100vh - 80px);
+  }
+}
+
+
+
+/* Make sure the modal is ALWAYS on top (above your nav/menu) */
+.offers-detail {
+  z-index: 9998;
+}
+.offers-detail-panel {
+  z-index: 9999;
+}
+
+.offers-stage.is-dimmed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Make the modal cover the whole viewport (not just the section box) */
+#offersDetail.offers-detail{
+  position: fixed;
+  inset: 0;
+}
+
+/* Backdrop */
+#offersDetail.offers-detail::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: none;                 /* remove blur artifacts */
+  -webkit-backdrop-filter: none;
+  z-index: 0;
+}
+
+/* Panel must sit ABOVE the backdrop */
+#offersDetail .offers-detail-panel{
+  position: relative;
+  z-index: 1;
+
+  background: rgba(15, 15, 15, 0.92) !important; /* more solid */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  overflow: hidden; /* prevents any weird overlay bleed */
+}
+
+/* Make sure nothing in the panel adds a gradient overlay */
+#offersDetail .offers-detail-panel::before,
+#offersDetail .offers-detail-panel::after{
+  content: none !important;
+}
+
+/* slot should not resize based on layout */
+.offers-selected-slot {
+  flex: 0 0 auto;
+}
+
+/* when in the slot, never apply hover lift/scale */
+.offers-selected-slot .offer-card:hover {
+  transform: none !important;
+}
+
+/* prevent transitions/hover transforms on the cloned/settled cards */
+.offer-card--flying,
+.offer-card--static {
+  transition: none !important;
+  transform: none !important;
+}
+
+/* also ensure the card inside the slot never “hover lifts” */
+#offersSelectedSlot .offer-card:hover {
+  transform: none !important;
+}
+
+/* =========================
+   MOBILE: TEAM SECTION SCROLL (ONLY THIS PAGE)
+   ========================= */
+@media screen and (max-width: 991px) {
+
+/* Stop the heading/subheading from sticking over cards */
+  #contact_section_transition .contact-heading,
+  #contact_section_transition .contact-subheading {
+    position: relative !important;
+    top: auto !important;
+    z-index: auto !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Keep the whole site locked */
+  body {
+    overflow: hidden;
+  }
+
+  /* Only the Team section becomes "scroll host" */
+  #contact_section_transition {
+    height: 100vh;
+    overflow: hidden; /* prevent weird outside scroll */
+  }
+
+  /* Override the generic .flexbox centering for this one page */
+  #contact_section_transition .contact-flexbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: none;
+
+    width: 100%;
+    height: 100vh;
+
+    /* give space so Wilmar card + heading don't hide under logo/menu */
+    padding-top: 190px;   /* tweak if needed (logo/menu clearance) */
+    padding-bottom: 40px;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    /* scrolling inside the page only */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+
+    /* keep it aligned from the top */
+    justify-content: flex-start;
+  }
+
+  /* Optional: make heading stay visible while scrolling */
+  #contact_section_transition .contact-heading {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding-top: 6px;
+    background: rgba(15,15,15,0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  #contact_section_transition .contact-subheading {
+    position: sticky;
+    top: 54px; /* sits under heading */
+    z-index: 2;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+    background: rgba(15,15,15,0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+
+
+/* Panel: never exceed viewport height; allow internal scrolling */
+#offersDetail .offers-detail-panel{
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Desktop/tablet: keep grid but auto-fit so it wraps nicely */
+.offers-plans-grid{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+/* Mobile: turn plans into a swipe row with snap */
+@media (max-width: 820px){
+  .offers-plans-grid{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 82vw); /* one card per swipe */
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .offers-plans-grid::-webkit-scrollbar{
+    height: 8px;
+  }
+
+  .plan-card{
+    scroll-snap-align: start;
+  }
+}
+
+/* Make the close button always visible (nice on mobile) */
+#offersDetail .offers-detail-close{
+  position: sticky;
+  top: 12px;
+  margin-left: auto;
+  z-index: 5;
+}
+
+/* =========================
+   OFFERS DETAIL: SCROLLBAR WITHOUT “RECTANGLE TRACK”
+   (keeps your rounded aesthetic)
+   ========================= */
+
+#offersDetail .offers-detail-panel{
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.22) transparent;
+}
+
+/* WebKit */
+#offersDetail .offers-detail-panel::-webkit-scrollbar{
+  width: 10px;
+}
+
+/* REMOVE the track rectangle completely */
+#offersDetail .offers-detail-panel::-webkit-scrollbar-track{
+  background: transparent !important;
+  border-radius: 999px;
+  margin: 10px 0;
+}
+
+/* Slim, floating thumb only */
+#offersDetail .offers-detail-panel::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.22);
+  border-radius: 999px;
+
+  /* creates spacing so it looks like a “pill” floating */
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+#offersDetail .offers-detail-panel::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.32);
+  background-clip: content-box;
+}
+
+#offersDetail .offers-detail-panel::-webkit-scrollbar-thumb:active{
+  background: rgba(255,255,255,0.40);
+  background-clip: content-box;
+}
+
+/* =========================
+   OFFERS DETAIL: REMOVE SCROLLBAR ARROWS (WebKit)
+   ========================= */
+
+/* Hide the increment/decrement buttons (the arrows) */
+#offersDetail .offers-detail-panel::-webkit-scrollbar-button{
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Also hide the “corner” block (sometimes shows on Windows) */
+#offersDetail .offers-detail-panel::-webkit-scrollbar-corner{
+  background: transparent;
+}
+
+/* =========================
+   SMALL SCREEN BLOCKER (FULL SITE)
+   Only triggers once your layout would need horizontal scrolling.
+   This breakpoint allows the Offers plans to still sit in a 2x2 grid.
+   ========================= */
+
+.screen-blocker{
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: none;
+  place-items: center;
+  padding: 28px;
+  background: #0F0F0F;
+  color: #fff;
+  text-align: center;
+}
+
+.screen-blocker__card{
+  width: min(720px, 92vw);
+  border-radius: 22px;
+  border: 2px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.03);
+  box-shadow: 0px 0px 18px rgba(0,0,0,0.55);
+  padding: 22px 20px;
+}
+
+.screen-blocker__title{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(20px, 4.4vw, 34px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.screen-blocker__sub{
+  margin-top: 10px;
+  color: rgba(255,255,255,0.60);
+  font-size: 0.98rem;
+}
+
+/* ✅ Allow smaller screens, but block once 2x2 is no longer realistic */
+@media (max-width: 820px), (max-height: 560px) {
+  .screen-blocker{
+    display: grid;
+  }
+
+  body > *:not(.screen-blocker){
+    display: none !important;
+  }
+
+  body{
+    overflow: hidden !important;
+  }
+}
+
