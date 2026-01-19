@@ -18,22 +18,34 @@
     rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> -->
   <link rel="stylesheet" href="../css/style.css">
 
 </head>
 
 <body>
 
+  <!-- SPLASH / INTRO -->
+  <div id="splash" aria-hidden="true">
+    <div class="splash-inner">
+      <div class="splash-type">
+        <span id="splashText"></span>
+      </div>
+    </div>
+  </div>
+
+<!-- SMALL SCREEN BLOCKER (add inside <body>, near the top) -->
+<div class="screen-blocker" aria-hidden="true">
+  <div class="screen-blocker__card">
+    <div class="screen-blocker__title">Please view this website on a bigger screen.</div>
+    <div class="screen-blocker__sub">This experience is designed for larger displays.</div>
+  </div>
+</div>
+
+
   <!-- LOGO IMAGE -->
   <a href="https://malherbes.co" class="logo" target="_blank">
     <img src="../img/M.CO-WhiteTransparent.png" alt="">
   </a>
-
-  <!-- INSTAGRAM LINK -->
-  <!-- <a href="https://www.instagram.com/wilmar.malherbe/" class="insta-redirect" id="insta_redirect">
-    <img src="../img/ButtonInstagram.png" alt="instaImage">
-  </a> -->
 
   <!-- NAVBAR MENU -->
   <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
@@ -41,6 +53,7 @@
   <nav class="nav">
     <ul class="pt-5">
       <li><a class="transition_button_trigger_home" href="javascript:void(0)">Home</a></li>
+      <li><a class="transition_button_trigger_offers" href="javascript:void(0)">Offers</a></li>
       <li><a class="transition_button_trigger_work" href="javascript:void(0)">Partners</a></li>
       <li><a class="transition_button_trigger_contact" href="javascript:void(0)">The Team</a></li>
     </ul>
@@ -109,7 +122,7 @@
             <b>
               <h6 id="song_name"></h6>
             </b>
-            
+
             <div class="button-items">
               <div id="slider">
                 <div id="elapsed"></div>
@@ -125,12 +138,149 @@
       </div>
 
     </section>
+<!-- OFFERS (SECTION) -->
+<section id="offers_section_transition" data-transition="wipe_left">
+  <div class="flexbox offers-flexbox" id="offersFlexbox">
 
+    <!-- NORMAL STATE -->
+    <div class="offers-stage" id="offersStage">
+      <h2 class="contact-heading">Offers</h2>
+      <p class="contact-subheading">
+        Pick a sector to explore our service packages and what we can manage for you.
+      </p>
+
+      <div class="offers-grid">
+
+        <button class="offer-card" type="button" data-offer="churches">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- Church -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v6" />
+              <path d="M9.5 6h5" />
+              <path d="M5 21V11l7-5 7 5v10" />
+              <path d="M9 21v-4a3 3 0 0 1 6 0v4" />
+            </svg>
+          </div>
+          <div class="offer-title">Churches</div>
+          <div class="offer-subtitle">Managed IT, WiFi, security, backups.</div>
+        </button>
+
+        <button class="offer-card" type="button" data-offer="schools">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- School -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 10l8-4 8 4-8 4-8-4Z" />
+              <path d="M6 12v6c2 2 10 2 12 0v-6" />
+              <path d="M20 10v6" />
+            </svg>
+          </div>
+          <div class="offer-title">Schools</div>
+          <div class="offer-subtitle">Networks, devices, filtering, support.</div>
+        </button>
+
+        <button class="offer-card" type="button" data-offer="retail">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- Retail -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 9l2-4h12l2 4" />
+              <path d="M6 9v11h12V9" />
+              <path d="M9 20v-7h6v7" />
+            </svg>
+          </div>
+          <div class="offer-title">Retail</div>
+          <div class="offer-subtitle">POS uptime, WiFi, monitoring, CCTV.</div>
+        </button>
+
+        <button class="offer-card" type="button" data-offer="hospitality">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- Hospitality -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 14h16" />
+              <path d="M6 14v6" />
+              <path d="M18 14v6" />
+              <path d="M8 10a4 4 0 0 1 8 0v4H8v-4Z" />
+            </svg>
+          </div>
+          <div class="offer-title">Hospitality</div>
+          <div class="offer-subtitle">Guest WiFi, AP tuning, uptime, support.</div>
+        </button>
+
+        <button class="offer-card" type="button" data-offer="medical">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- Medical -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 21s7-4.5 7-10a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 5.5 7 10 7 10Z" />
+              <path d="M12 10v4" />
+              <path d="M10 12h4" />
+            </svg>
+          </div>
+          <div class="offer-title">Medical</div>
+          <div class="offer-subtitle">Secure systems, backups, compliance-first.</div>
+        </button>
+
+        <button class="offer-card" type="button" data-offer="professional">
+          <div class="offer-icon" aria-hidden="true">
+            <!-- Professional -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M9 6V5a3 3 0 0 1 6 0v1" />
+              <path d="M4 8h16v12H4V8Z" />
+              <path d="M4 12h16" />
+              <path d="M10 12v2h4v-2" />
+            </svg>
+          </div>
+          <div class="offer-title">Professional</div>
+          <div class="offer-subtitle">Email, devices, security, managed support.</div>
+        </button>
+
+      </div>
+
+      <p class="contact-hint">Click a card to expand its service plans.</p>
+    </div>
+
+    <!-- EXPANDED STATE (CENTER MODAL) -->
+    <div class="offers-detail" id="offersDetail" aria-hidden="true">
+      <div class="offers-detail-panel" role="dialog" aria-modal="true" aria-label="Offer details">
+
+        <button class="offers-detail-close" id="offersCloseBtn" type="button" aria-label="Close">
+          ×
+        </button>
+
+        <div class="offers-detail-top">
+          <div class="offers-selected-slot" id="offersSelectedSlot"></div>
+
+          <div class="offers-desc-card">
+            <div class="offers-desc-kicker">CATEGORY</div>
+            <div class="offers-desc-title" id="offersDescTitle">Title</div>
+            <div class="offers-desc-text" id="offersDescText">Description</div>
+
+            <div class="offers-desc-chips">
+              <span class="offers-chip">Service</span>
+              <span class="offers-chip">Information Technology</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="offers-plans-heading">
+          <div class="offers-plans-title">Plans</div>
+        </div>
+
+        <div class="offers-plans-grid" id="offersPlansGrid"></div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    
+    <!-- WORK SECTION -->
     <section id="work_section_transition" data-transition='wipe_left'>
       <div class='flexbox'>
         <h1 style="text-align: center; color: white; margin-bottom: 10px;">Partners</h1>
-        <p class="section-description" style="text-align: center; color: white; margin-bottom: 40px;">Trusted partners we support with end-to-end IT services.</p>
-        
+        <p class="section-description" style="text-align: center; color: white; margin-bottom: 40px;">Trusted partners
+          we support with end-to-end IT services.</p>
+
         <div class="projects-container">
 
           <div class="project-card">
@@ -143,7 +293,7 @@
               <button disabled>Not Available</button>
             </div>
           </div>
-    
+
           <div class="project-card">
             <div class="project-image-wrapper">
               <img src="../img/projects/nghelder.jpg" alt="Project Image">
@@ -163,66 +313,106 @@
 
     <section id="contact_section_transition" data-transition='wipe_left'>
 
-  <div class="flexbox contact-flexbox">
+      <div class="flexbox contact-flexbox">
 
-    <h2 class="contact-heading">The Team</h2>
-    <p class="contact-subheading">The people behind Malherbes Co. — building and supporting your IT stack.</p>
+        <h2 class="contact-heading">The Team</h2>
+        <p class="contact-subheading">The people behind Malherbes Co. — building and supporting your IT stack.</p>
 
-    <div class="contact-grid">
+	<div class="contact-grid">
 
-      <!-- Wilmar -->
-      <div class="contact-box" style="--focus: 50% 70%;">
-        <div class="contact-box__media">
-          <img src="../img/people/wilmar.jpg" alt="Wilmar Malherbe">
-        </div>
-
-        <div class="contact-box__body">
-          <div class="contact-box__name">Wilmar Malherbe</div>
-          <div class="contact-box__title">CEO &amp; Developer</div>
-
-          <div class="contact-box__divider"></div>
-
-          <a class="contact-box__email" href="mailto:wilmar@malherbes.co">
-            wilmar@malherbes.co
-          </a>
-        </div>
-      </div>
-
-      <!-- Michael -->
-      <div class="contact-box contact-box--michael" style="--img: url('../img/people/michael.jpg');">
-        <div class="contact-box__media">
-          <img src="../img/people/michael.jpg" alt="Michael Coates">
-        </div>
-
-        <div class="contact-box__body">
-          <div class="contact-box__name">Michael Coates</div>
-          <div class="contact-box__title">Brand Manager</div>
-
-          <div class="contact-box__divider"></div>
-
-          <a class="contact-box__email" href="mailto:michael@malherbes.co">
-            michael@malherbes.co
-          </a>
-        </div>
-      </div>
-
+  <!-- Wilmar -->
+  <div class="contact-box" style="--focus: 50% 70%;">
+    <div class="contact-box__media">
+      <img src="../img/people/wilmar.jpg" alt="Wilmar Malherbe">
     </div>
 
-    <p class="contact-hint">
-      Clicking an email will open your preferred mail application.
-    </p>
+    <div class="contact-box__body">
+      <div class="contact-box__name">Wilmar Malherbe</div>
+      <div class="contact-box__title">CEO &amp; Developer</div>
 
+      <div class="contact-box__divider"></div>
+
+      <a class="contact-box__email" href="mailto:wilmar@malherbes.co">
+        wilmar@malherbes.co
+      </a>
+    </div>
   </div>
 
-</section>
+  <!-- Michael -->
+  <div class="contact-box contact-box--michael" style="--img: url('../img/people/michael.jpg');">
+    <div class="contact-box__media">
+      <img src="../img/people/michael.jpg" alt="Michael Coates">
+    </div>
 
+    <div class="contact-box__body">
+      <div class="contact-box__name">Michael Coates</div>
+      <div class="contact-box__title">Brand Manager</div>
 
+      <div class="contact-box__divider"></div>
+
+      <a class="contact-box__email" href="mailto:michael@malherbes.co">
+        michael@malherbes.co
+      </a>
+    </div>
+  </div>
+
+  <!-- Ethan -->
+  <div class="contact-box contact-box--ethan" style="--img: url('../img/people/ethan.jpg');">
+    <div class="contact-box__media">
+      <img src="../img/people/ethan.jpg" alt="Ethan Wolfaardt">
+    </div>
+
+    <div class="contact-box__body">
+      <div class="contact-box__name">Ethan Wolfaardt</div>
+      <div class="contact-box__title">Tech Analyst</div>
+
+      <div class="contact-box__divider"></div>
+
+      <a class="contact-box__email" href="mailto:ethan@malherbes.co">
+        ethan@malherbes.co
+      </a>
+    </div>
+  </div>
+
+  <!-- Kyren -->
+  <div class="contact-box" style="--focus: 50% 45%;">
+    <div class="contact-box__media">
+      <img src="../img/people/kyren.jpg" alt="Kyren Thomas">
+    </div>
+
+    <div class="contact-box__body">
+      <div class="contact-box__name">Kyren Thomas</div>
+      <div class="contact-box__title">Tech Analyst</div>
+
+      <div class="contact-box__divider"></div>
+
+      <a class="contact-box__email" href="mailto:kyren@malherbes.co">
+        kyren@malherbes.co
+      </a>
+    </div>
+  </div>
+
+</div>
+        
+
+        <p class="contact-hint">
+          Clicking an email will open your preferred mail application.
+        </p>
+
+      </div>
+
+    </section>
 
   </div>
 
   <!-- LOAD JQUERY AND EXTERNAL JAVASCRIPT FILES -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/typeit@8.8.7/dist/index.umd.js"></script>
+
+  <!-- NOTE: you currently load jQuery twice in your codebase; leaving it as-is to match your baseline -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
   <script src="../js/script.js"></script>
 
 </body>
