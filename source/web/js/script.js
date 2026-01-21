@@ -350,14 +350,14 @@ if ("WebSocket" in window) {
 
 // OFFERS: EXPAND (CENTER MODAL + ANIMATE CARD INTO SLOT) — UPDATED
 (function () {
-  const flexbox  = document.getElementById("offersFlexbox");
-  const stage    = document.getElementById("offersStage");
-  const detail   = document.getElementById("offersDetail");
+  const flexbox = document.getElementById("offersFlexbox");
+  const stage = document.getElementById("offersStage");
+  const detail = document.getElementById("offersDetail");
   const closeBtn = document.getElementById("offersCloseBtn");
-  const slot     = document.getElementById("offersSelectedSlot");
+  const slot = document.getElementById("offersSelectedSlot");
 
-  const titleEl   = document.getElementById("offersDescTitle");
-  const descEl    = document.getElementById("offersDescText");
+  const titleEl = document.getElementById("offersDescTitle");
+  const descEl = document.getElementById("offersDescText");
   const plansGrid = document.getElementById("offersPlansGrid");
 
   const cards = document.querySelectorAll(".offer-card");
@@ -365,12 +365,12 @@ if ("WebSocket" in window) {
 
   // --- FIX: move modal to BODY on open (so fixed backdrop works even inside transformed parents)
   let originalDetailParent = null;
-  let originalDetailNext   = null;
+  let originalDetailNext = null;
 
   function ensureDetailInBody() {
     if (detail.parentElement === document.body) return;
     originalDetailParent = detail.parentElement;
-    originalDetailNext   = detail.nextElementSibling;
+    originalDetailNext = detail.nextElementSibling;
     document.body.appendChild(detail);
   }
 
@@ -681,4 +681,469 @@ if ("WebSocket" in window) {
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && detail.classList.contains("is-open")) closeOffer();
   });
+})();
+
+// QUOTE FORM MODAL (CTA + validation + submit animation + close all modals)
+(function () {
+  const openBtn = document.getElementById("openQuoteBtn");
+  const modal = document.getElementById("quoteModal");
+  const closeBtn = document.getElementById("quoteCloseBtn");
+  const form = document.getElementById("quoteForm");
+  const submitBtn = document.getElementById("quoteSubmitBtn");
+
+  if (!openBtn || !modal || !closeBtn || !form || !submitBtn) return;
+
+  // If you want to POST to an API later, set this:
+  // const FORM_ENDPOINT = "https://api.yourdomain.co.za/quote";
+  const FORM_ENDPOINT = null;
+
+  // Move modal to body like Offers detail (prevents transform/stacking issues)
+  let originalParent = null;
+  let originalNext = null;
+
+  function ensureInBody() {
+    if (modal.parentElement === document.body) return;
+    originalParent = modal.parentElement;
+    originalNext = modal.nextElementSibling;
+    document.body.appendChild(modal);
+  }
+
+  function restoreParent() {
+    if (!originalParent) return;
+    if (originalNext && originalNext.parentElement === originalParent) {
+      originalParent.insertBefore(modal, originalNext);
+    } else {
+      originalParent.appendChild(modal);
+    }
+    originalParent = null;
+    originalNext = null;
+  }
+
+  function closeOffersDetailIfOpen() {
+    const offersDetail = document.getElementById("offersDetail");
+    const offersClose = document.getElementById("offersCloseBtn");
+    if (offersDetail && offersClose && offersDetail.classList.contains("is-open")) {
+      offersClose.click();
+    }
+  }
+
+  function closeQuoteModal() {
+    gsap.to(modal, {
+      opacity: 0,
+      duration: 0.18,
+      ease: "power2.in",
+      onComplete: () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        modal.style.opacity = "";
+        restoreParent();
+      }
+    });
+  }
+
+  function openQuoteModal() {
+    // optional: if offers detail is open, close it first
+    closeOffersDetailIfOpen();
+
+    ensureInBody();
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+
+    gsap.killTweensOf(modal);
+    gsap.set(modal, { opacity: 1 });
+
+    // reset panel scroll
+    const panel = modal.querySelector(".quote-modal__panel");
+    if (panel) panel.scrollTop = 0;
+
+    // focus first field
+    const first = form.querySelector("#qFullName");
+    if (first) first.focus();
+  }
+
+  // ---- validation helpers
+  const qFullName = document.getElementById("qFullName");
+  const qCategory = document.getElementById("qCategory");
+  const qEmail = document.getElementById("qEmail");
+  const qPhone = document.getElementById("qPhone");
+
+  const fields = [
+    { el: qFullName, name: "Full Name" },
+    { el: qCategory, name: "Service Category" },
+    { el: qEmail, name: "Email" },
+    { el: qPhone, name: "Phone Number" },
+  ];
+
+  function setError(inputEl, message) {
+    const wrap = inputEl.closest(".quote-field");
+    const err = form.querySelector(`.quote-error[data-for="${inputEl.id}"]`);
+    if (wrap) wrap.classList.add("is-invalid");
+    if (err) err.textContent = message || "";
+  }
+
+  function clearError(inputEl) {
+    const wrap = inputEl.closest(".quote-field");
+    const err = form.querySelector(`.quote-error[data-for="${inputEl.id}"]`);
+    if (wrap) wrap.classList.remove("is-invalid");
+    if (err) err.textContent = "";
+  }
+
+  function digitsCount(s) {
+    return (s.match(/\d/g) || []).length;
+  }
+
+  function validate() {
+    let ok = true;
+
+    fields.forEach(f => clearError(f.el));
+
+    // Full name: required, min 2, basic allowed chars
+    const nameVal = (qFullName.value || "").trim();
+    if (!nameVal) { ok = false; setError(qFullName, "Please enter your full name."); }
+    else if (nameVal.length < 2) { ok = false; setError(qFullName, "Name is too short."); }
+    else if (!/^[a-zA-ZÀ-ž' -]+$/.test(nameVal)) { ok = false; setError(qFullName, "Use letters only (plus spaces / - / ')."); }
+
+    // Category: required
+    if (!qCategory.value) { ok = false; setError(qCategory, "Please select a service category."); }
+
+    // Email: required + basic format
+    const emailVal = (qEmail.value || "").trim();
+    if (!emailVal) { ok = false; setError(qEmail, "Please enter your email address."); }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { ok = false; setError(qEmail, "Please enter a valid email."); }
+
+    // Phone: required + allow + () - spaces; 7–15 digits
+    const phoneVal = (qPhone.value || "").trim();
+    if (!phoneVal) { ok = false; setError(qPhone, "Please enter your phone number."); }
+    else if (!/^[0-9+() \-]+$/.test(phoneVal)) { ok = false; setError(qPhone, "Use digits and + ( ) - only."); }
+    else {
+      const d = digitsCount(phoneVal);
+      if (d < 7 || d > 15) { ok = false; setError(qPhone, "Phone number length looks incorrect."); }
+    }
+
+    // focus first invalid
+    if (!ok) {
+      const firstInvalid = form.querySelector(".quote-field.is-invalid .quote-input");
+      if (firstInvalid) firstInvalid.focus();
+    }
+
+    return ok;
+  }
+
+  // live clear on input
+  form.addEventListener("input", (e) => {
+    const t = e.target;
+    if (t && t.classList && t.classList.contains("quote-input")) {
+      clearError(t);
+    }
+  });
+
+  // ---- submit logic
+  function setSubmitState(state, text) {
+    submitBtn.setAttribute("data-state", state);
+    const textEl = submitBtn.querySelector(".quote-submit__text");
+    if (textEl && text) textEl.textContent = text;
+
+    if (state === "sending") submitBtn.disabled = true;
+    if (state === "idle") submitBtn.disabled = false;
+    if (state === "success") submitBtn.disabled = true;
+    if (state === "error") submitBtn.disabled = false;
+  }
+
+  async function sendPayload(payload) {
+    // mock (until you wire your API)
+    if (!FORM_ENDPOINT) {
+      await new Promise(res => setTimeout(res, 1200));
+      return { ok: true };
+    }
+
+    // real POST
+    const res = await fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error("Server returned an error.");
+    return res;
+  }
+
+  function closeAllModals() {
+    closeOffersDetailIfOpen();
+    closeQuoteModal();
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const payload = {
+      fullName: qFullName.value.trim(),
+      category: qCategory.value,
+      email: qEmail.value.trim(),
+      phone: qPhone.value.trim(),
+      source: "offers_quote_modal",
+      submittedAt: new Date().toISOString()
+    };
+
+    setSubmitState("sending", "Sending...");
+
+    try {
+      await sendPayload(payload);
+
+      setSubmitState("success", "Sent");
+
+      // brief success beat, then close everything + reset
+      setTimeout(() => {
+        form.reset();
+        fields.forEach(f => clearError(f.el));
+        setSubmitState("idle", "Submit");
+        closeAllModals();
+      }, 700);
+
+    } catch (err) {
+      console.error(err);
+      setSubmitState("error", "Try Again");
+      // show a generic error under email field (or make a top banner if you prefer)
+      setError(qEmail, "Could not submit right now. Please try again.");
+    }
+  });
+
+  // open / close handlers
+  openBtn.addEventListener("click", openQuoteModal);
+  closeBtn.addEventListener("click", closeQuoteModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeQuoteModal();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) closeQuoteModal();
+  });
+})();
+
+// QUOTE FORM: submit -> POST, debounce, success/error UX, auto-close + TOKEN (prevents stale callbacks)
+(function () {
+  const modal = document.getElementById("quoteModal");
+  const closeBtn = document.getElementById("quoteCloseBtn");
+  const openBtn = document.getElementById("openQuoteBtn");
+  const form = document.getElementById("quoteForm");
+  const submit = document.getElementById("quoteSubmitBtn");
+
+  const fullName = document.getElementById("qFullName");
+  const email = document.getElementById("qEmail");
+  const phone = document.getElementById("qPhone");
+  const category = document.getElementById("qCategory");
+
+  if (!modal || !form || !submit || !fullName || !email || !phone || !category) return;
+
+  // status line (created once)
+  let statusEl = modal.querySelector(".quote-status");
+  if (!statusEl) {
+    statusEl = document.createElement("div");
+    statusEl.className = "quote-status";
+    form.appendChild(statusEl);
+  }
+
+  function setStatus(msg, kind) {
+    statusEl.textContent = msg || "";
+    statusEl.classList.toggle("is-error", kind === "error");
+    statusEl.classList.toggle("is-success", kind === "success");
+    statusEl.style.display = msg ? "block" : "none";
+  }
+
+  function setError(input, msg) {
+    const holder = modal.querySelector(`.quote-error[data-for="${input.id}"]`);
+    if (holder) holder.textContent = msg || "";
+    input.classList.toggle("is-invalid", !!msg);
+  }
+
+  function clearErrors() {
+    [fullName, email, phone, category].forEach(i => setError(i, ""));
+    setStatus("", null);
+  }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  function isValidPhone(v) {
+    const digits = (v || "").replace(/[^\d]/g, "");
+    return digits.length >= 9;
+  }
+
+  function validate() {
+    clearErrors();
+    let ok = true;
+
+    const n = fullName.value.trim();
+    const m = email.value.trim();
+    const p = phone.value.trim();
+    const c = category.value.trim();
+
+    if (n.length < 2) { setError(fullName, "Please enter your full name."); ok = false; }
+    if (!isValidEmail(m)) { setError(email, "Please enter a valid email address."); ok = false; }
+    if (!isValidPhone(p)) { setError(phone, "Please enter a valid phone number."); ok = false; }
+    if (!c) { setError(category, "Please select a category."); ok = false; }
+
+    return ok;
+  }
+
+  // -------------------------
+  // TOKEN + DEBOUNCE STATE
+  // -------------------------
+  let inFlight = false;
+  let closeTimer = null;
+
+  // token invalidates old async responses/timeouts if modal is reopened/closed
+  let requestToken = 0;
+
+  function clearCloseTimer() {
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+  }
+
+  // modal open/close helpers
+  function openModal() {
+    requestToken++;           // invalidate any old callbacks
+    clearCloseTimer();
+
+    clearErrors();
+    form.reset();
+    setStatus("", null);
+
+    submit.disabled = false;
+    submit.setAttribute("data-state", "idle");
+    submit.querySelector(".quote-submit__text").textContent = "Submit";
+
+    inFlight = false;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    requestToken++;           // invalidate any old callbacks
+    clearCloseTimer();
+
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    clearErrors();
+    form.reset();
+    setStatus("", null);
+
+    submit.disabled = false;
+    submit.setAttribute("data-state", "idle");
+    submit.querySelector(".quote-submit__text").textContent = "Submit";
+
+    inFlight = false;
+  }
+
+  if (openBtn) openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (inFlight) return;
+
+    if (!validate()) return;
+
+    clearCloseTimer();
+
+    // token for THIS submit
+    const myToken = ++requestToken;
+
+    // lock UI
+    inFlight = true;
+    submit.disabled = true;
+    submit.setAttribute("data-state", "loading");
+    submit.querySelector(".quote-submit__text").textContent = "Submitting";
+    setStatus("Sending request…", null);
+
+    // Build URL with querystring (API expects these keys)
+    const url = new URL("https://api.malherbes.co/v1/submitQuery");
+    url.searchParams.set("name", fullName.value.trim());
+    url.searchParams.set("mail", email.value.trim());
+    url.searchParams.set("phone", phone.value.trim());
+    url.searchParams.set("category", category.value.trim());
+
+    try {
+      const res = await fetch(url.toString(), {
+        method: "POST",
+        headers: { "Accept": "application/json" }
+      });
+
+      let json = null;
+      try { json = await res.json(); } catch (_) { }
+
+      // ignore stale responses
+      if (myToken !== requestToken) return;
+
+      const ok = (res.status === 200 && json && json.status === true);
+
+      if (ok) {
+        submit.setAttribute("data-state", "success");
+        submit.querySelector(".quote-submit__text").textContent = "Query submitted";
+        setStatus("Success — we’ve received your request.", "success");
+
+        closeTimer = setTimeout(() => {
+          if (myToken !== requestToken) return; // ignore stale timeout
+          closeModal();
+
+          // also close offers modal if open
+          const offersDetail = document.getElementById("offersDetail");
+          if (offersDetail && offersDetail.classList.contains("is-open")) {
+            const offersClose = document.getElementById("offersCloseBtn");
+            if (offersClose) offersClose.click();
+            else offersDetail.classList.remove("is-open");
+          }
+        }, 3000);
+
+      } else {
+        // unlock, show error, then close after 3s
+        submit.disabled = true; // keep disabled until close
+        submit.setAttribute("data-state", "idle");
+        submit.querySelector(".quote-submit__text").textContent = "Submit";
+        setStatus("Something went wrong. Please try again.", "error");
+
+        closeTimer = setTimeout(() => {
+          if (myToken !== requestToken) return;
+          closeModal();
+        }, 3000);
+      }
+
+    } catch (err) {
+      if (myToken !== requestToken) return;
+
+      submit.disabled = true; // keep disabled until close
+      submit.setAttribute("data-state", "idle");
+      submit.querySelector(".quote-submit__text").textContent = "Submit";
+      setStatus("Something went wrong. Please try again.", "error");
+
+      closeTimer = setTimeout(() => {
+        if (myToken !== requestToken) return;
+        closeModal();
+      }, 3000);
+    } finally {
+      // Only unlock if this submit is still current and modal still open.
+      if (myToken === requestToken && modal.classList.contains("is-open")) {
+        inFlight = false;
+        // keep disabled during the 3s success/error display
+      }
+    }
+  }
+
+  form.addEventListener("submit", handleSubmit);
 })();

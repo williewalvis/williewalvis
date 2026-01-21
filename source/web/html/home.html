@@ -235,6 +235,17 @@
       </div>
 
       <p class="contact-hint">Click a card to expand its service plans.</p>
+
+   <!-- CTA: Request a Quote -->
+    <div class="offers-cta-wrap">
+      <button class="offers-cta-btn" id="openQuoteBtn" type="button">
+        Request a Quote
+        <span class="offers-cta-btn__glow" aria-hidden="true"></span>
+      </button>
+      <div class="offers-cta-note">Quick form — we’ll get back to you.</div>
+    </div>
+
+
     </div>
 
     <!-- EXPANDED STATE (CENTER MODAL) -->
@@ -268,6 +279,76 @@
 
       </div>
     </div>
+
+    <!-- QUOTE FORM MODAL -->
+<div class="quote-modal" id="quoteModal" aria-hidden="true">
+  <div class="quote-modal__panel" role="dialog" aria-modal="true" aria-label="Request a quote">
+
+    <button class="quote-modal__close" id="quoteCloseBtn" type="button" aria-label="Close">
+      ×
+    </button>
+
+    <div class="quote-modal__header">
+      <div class="quote-modal__kicker">GET STARTED</div>
+      <div class="quote-modal__title">Request a Quote</div>
+      <div class="quote-modal__sub">
+        Tell us what you need — we’ll respond with options that fit your environment.
+      </div>
+    </div>
+
+    <form class="quote-form" id="quoteForm" novalidate>
+
+      <div class="quote-grid">
+        <div class="quote-field">
+          <label class="quote-label" for="qFullName">Full Name</label>
+          <input class="quote-input" id="qFullName" name="fullName" type="text" placeholder="Your name" autocomplete="name" required />
+          <div class="quote-error" data-for="qFullName"></div>
+        </div>
+
+        <div class="quote-field">
+          <label class="quote-label" for="qCategory">Service Category</label>
+          <select class="quote-input" id="qCategory" name="category" required>
+            <option value="" selected disabled>Select a category…</option>
+            <option value="Churches">Churches</option>
+            <option value="Schools">Schools</option>
+            <option value="Retail">Retail</option>
+            <option value="Hospitality">Hospitality</option>
+            <option value="Medical">Medical</option>
+            <option value="Professional">Professional</option>
+          </select>
+          <div class="quote-error" data-for="qCategory"></div>
+        </div>
+
+        <div class="quote-field">
+          <label class="quote-label" for="qEmail">Email</label>
+          <input class="quote-input" id="qEmail" name="email" type="email" placeholder="name@company.com" autocomplete="email" required />
+          <div class="quote-error" data-for="qEmail"></div>
+        </div>
+
+        <div class="quote-field">
+          <label class="quote-label" for="qPhone">Phone Number</label>
+          <input class="quote-input" id="qPhone" name="phone" type="tel" placeholder="+27 82 123 4567" autocomplete="tel" required />
+          <div class="quote-error" data-for="qPhone"></div>
+        </div>
+      </div>
+
+      <div class="quote-actions">
+        <button class="quote-submit" id="quoteSubmitBtn" type="submit" data-state="idle">
+          <span class="quote-submit__text">Submit</span>
+          <span class="quote-submit__spinner" aria-hidden="true"></span>
+          <span class="quote-submit__check" aria-hidden="true">✓</span>
+        </button>
+
+        <div class="quote-privacy">
+          By submitting, you agree to be contacted about this request.
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
 
   </div>
 </section>
