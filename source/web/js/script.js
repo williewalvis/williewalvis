@@ -390,20 +390,134 @@ if ("WebSocket" in window) {
   const offersData = {
     churches: {
       title: "Churches",
-      desc: "Reliable WiFi, secure networks, backups, and ongoing IT support — built around volunteer-friendly operations and predictable service costs.",
+      desc: "Reliable technology for worship, operations, and media — from weekday admin support to full campus IT + production management.",
       plans: [
-        { name: "Tier 1", badge: "OPTION", price: "R7 000 – R14 000", includes: ["Core setup & stabilisation", "Baseline security hardening", "Backup + recovery basics"] },
-        { name: "Tier 2", badge: "BEST FIT", price: "R14 000 – R25 000", includes: ["Managed monitoring & response", "Improved WiFi coverage / tuning", "User support + documentation"], recommended: true },
-        { name: "Tier 3", badge: "OPTION", price: "R25 000 – R45 000", includes: ["Advanced security layers", "Uptime-first design + redundancy", "Priority response + reviews"] },
-        { name: "Build Your Own", badge: "OPTION", price: "Custom", includes: ["Choose exactly what you need", "Scale per site / branch", "We quote based on scope"] }
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: [
+            "Budget friendly",
+            "Select what matters most",
+            "Scalable to your environment",
+            "Quoted per scope"
+          ]
+        },
+        {
+          name: "Tier 1",
+          badge: "CORE",
+          price: "R6,000 – R8,000 / month",
+          includes: [
+            "Remote IT helpdesk support (office staff)",
+            "Support for admin PCs & printers",
+            "Email setup & account management",
+            "Internet & Wi-Fi monitoring",
+            "Basic firewall & antivirus checks",
+            "Data backups (admin systems only)",
+            "User access management",
+            "Incident logging"
+          ],
+          excludes: [
+            "Media & AV systems",
+            "Livestream support",
+            "CCTV & access control",
+            "Weekend / event support",
+            "Compliance reporting"
+          ],
+          bestFor: ["Small churches", "Minimal weekday operations"],
+          addons: [
+            "CCTV monitoring",
+            "After-hours / Sunday standby",
+            "Website hosting & updates",
+            "Livestream optimisation & QA"
+          ]
+        },
+        {
+          name: "Tier 2",
+          badge: "MANAGED",
+          price: "R12,000 – R16,000 / month",
+          recommended: true,
+          includes: [
+            "Everything in Tier 1",
+            "Full IT environment management",
+            "Advanced firewall & network security",
+            "Staff vs guest Wi-Fi separation",
+            "Email security & spam protection",
+            "Backup monitoring & restore testing",
+            "AV system support (screens, projectors, sound PCs)",
+            "Livestream system support (YouTube / Facebook)",
+            "Vendor & license management",
+            "Priority response times",
+            "Monthly system health reporting"
+          ],
+          excludes: [
+            "Dedicated Sunday support",
+            "CCTV monitoring",
+            "Compliance & governance reporting",
+            "Advanced security response"
+          ],
+          bestFor: ["Medium churches", "Regular events", "Livestreaming setups"],
+          addons: [
+            "CCTV monitoring",
+            "After-hours / Sunday standby",
+            "Website hosting & updates",
+            "Livestream optimisation & QA"
+          ]
+        },
+        {
+          name: "Tier 3",
+          badge: "FULL CAMPUS",
+          price: "R25,000 / month",
+          includes: [
+            "Everything in Tier 2",
+
+            "Unlimited remote & on-site support",
+            "Network, Wi-Fi & firewall management",
+            "Staff & leadership device management",
+            "Backup, disaster recovery & continuity planning",
+            "Advanced cybersecurity monitoring",
+
+            "Livestream PC, encoder & network support",
+            "Projection & screen systems support",
+            "Media booth & control room systems",
+            "Sunday service & event priority support",
+            "Volunteer tech onboarding & support",
+
+            "CCTV system management & support",
+            "Access control & alarm system integration",
+            "Footage retention & incident support",
+
+            "Compliance & audit reporting",
+            "Incident documentation",
+            "Technology roadmap & planning",
+            "Vendor consolidation & management",
+
+            "Weekend & after-hours support",
+            "Priority SLA response",
+            "Dedicated account manager",
+            "Quarterly strategy & review meetings"
+          ],
+          bestFor: ["Large churches", "Media-heavy environments", "Multi-service campuses"],
+          addons: [
+            "CCTV monitoring",
+            "After-hours / Sunday standby",
+            "Website hosting & updates",
+            "Livestream optimisation & QA"
+          ]
+        }
       ]
     },
 
-    // --- UPDATED: Schools uses includes/excludes/addons/bestFor
     schools: {
       title: "Schools",
       desc: "Structured IT management for schools — from essential staff support to fully governed, device-controlled, audit-ready environments.",
       plans: [
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: ["Budget friendly", "Select what matters", "Scalable to needs", "Quoted per scope"]
+        },
         {
           name: "Tier 1",
           badge: "ESSENTIAL",
@@ -422,7 +536,8 @@ if ("WebSocket" in window) {
           ],
           excludes: [
             "Advanced security, learner devices, compliance reporting, or automation systems"
-          ]
+          ],
+          bestFor: ["Smaller schools", "Core staff support + stability"]
         },
         {
           name: "Tier 2",
@@ -445,7 +560,8 @@ if ("WebSocket" in window) {
             "After-hours support",
             "CCTV monitoring (outsourced or AI)",
             "Biometrics system support"
-          ]
+          ],
+          bestFor: ["Growing schools", "More devices + stronger governance"]
         },
         {
           name: "Tier 3",
@@ -464,61 +580,467 @@ if ("WebSocket" in window) {
             "Dedicated account manager",
             "Quarterly strategy & planning sessions"
           ],
-          bestFor: [
-            "BYOD schools",
-            "Boarding schools"
-          ]
-        },
-        {
-          name: "Build Your Own",
-          badge: "CUSTOM",
-          price: "Contact Our Team",
-          includes: ["Budget friendly", "Select what matters", "Scalable to needs", "Quoted per scope"]
+          bestFor: ["BYOD schools", "Boarding schools", "High-compliance environments"]
         }
       ]
     },
 
     retail: {
       title: "Retail",
-      desc: "POS-first uptime, stable WiFi, monitoring and CCTV readiness — so you stay online, trading, and protected.",
+      desc: "POS-first uptime, stable WiFi, monitoring and security support — built to keep you trading, online, and protected.",
       plans: [
-        { name: "Tier 1", badge: "OPTION", price: "R7 000 – R14 000", includes: ["Core network stability", "Basic security hardening", "Backup fundamentals"] },
-        { name: "Tier 2", badge: "BEST FIT", price: "R14 000 – R25 000", includes: ["Monitoring + response", "WiFi coverage tuning", "Support + documentation"], recommended: true },
-        { name: "Tier 3", badge: "OPTION", price: "R25 000 – R45 000", includes: ["Advanced security layers", "Redundancy planning", "Priority response + reviews"] },
-        { name: "Build Your Own", badge: "OPTION", price: "Custom", includes: ["Select what matters", "Scale per store", "Quoted per scope"] }
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: [
+            "Per-store or multi-store scope",
+            "Choose exactly what you need",
+            "Scalable to franchises",
+            "Quoted per site"
+          ]
+        },
+        {
+          name: "Tier 1",
+          badge: "CORE",
+          price: "R4,500 – R7,000 / store / month",
+          includes: [
+            "Remote IT helpdesk support",
+            "POS system support (software & workstation level)",
+            "Internet & network monitoring",
+            "Office PC & back-office device support",
+            "Email & user account management",
+            "Basic cybersecurity (antivirus & firewall checks)",
+            "Data backups (POS & admin data)",
+            "Incident logging & resolution tracking"
+          ],
+          excludes: [
+            "CCTV monitoring",
+            "After-hours support",
+            "Compliance reporting",
+            "Multi-branch management"
+          ],
+          bestFor: ["Small independent stores", "Low-tech retail"]
+        },
+        {
+          name: "Tier 2",
+          badge: "MANAGED",
+          price: "R8,000 – R14,000 / store / month",
+          recommended: true,
+          includes: [
+            "Everything in Tier 1",
+            "Full network & Wi-Fi management",
+            "Advanced firewall & content filtering",
+            "Secure separation of POS, staff, and guest Wi-Fi",
+            "POS uptime monitoring & rapid response",
+            "Vendor & license management",
+            "Backup monitoring & restore testing",
+            "CCTV system support (hardware & software)",
+            "Priority response times",
+            "Monthly system health reporting"
+          ],
+          bestFor: ["Busy stores", "Franchise outlets", "Grocery / clothing / hardware"]
+        },
+        {
+          name: "Tier 3",
+          badge: "ENTERPRISE",
+          price: "R18,000 – R30,000+ / store / month",
+          includes: [
+            "Everything in Tier 2",
+
+            "Unlimited remote & on-site support",
+            "Advanced cybersecurity monitoring",
+            "Network redundancy & failover planning",
+            "Store opening/closing system support",
+            "Centralised multi-store management",
+
+            "Advanced POS security",
+            "Payment environment hardening",
+            "Incident response for transaction failures",
+            "Integration support (inventory, ERP, head office)",
+
+            "CCTV monitoring & footage management",
+            "Access control (staff-only areas)",
+            "Alarm system integration",
+            "Incident & theft investigation support",
+
+            "PCI-DSS aligned security checks (high-level)",
+            "Compliance & audit reporting",
+            "Risk & incident documentation",
+            "IT standardisation across stores",
+
+            "After-hours & weekend support",
+            "Priority SLA response",
+            "Dedicated account manager",
+            "Quarterly technology planning sessions"
+          ],
+          bestFor: ["High-volume retail", "Multi-branch", "High-risk environments"]
+        }
       ]
     },
 
     hospitality: {
       title: "Hospitality",
-      desc: "Guest WiFi done properly — AP tuning, coverage planning, monitoring and support to keep guests connected.",
+      desc: "Guest WiFi done properly — coverage planning, AP tuning, monitoring, and support to keep guests connected and operations stable.",
       plans: [
-        { name: "Tier 1", badge: "OPTION", price: "R7 000 – R14 000", includes: ["Core setup + stabilisation", "Basic guest WiFi config", "Backup essentials"] },
-        { name: "Tier 2", badge: "BEST FIT", price: "R14 000 – R25 000", includes: ["AP tuning + coverage optimisation", "Monitoring + response", "Support + documentation"], recommended: true },
-        { name: "Tier 3", badge: "OPTION", price: "R25 000 – R45 000", includes: ["Security layers + segmentation", "Uptime + redundancy focus", "Priority support + reviews"] },
-        { name: "Build Your Own", badge: "OPTION", price: "Custom", includes: ["Pick the exact setup", "Scale per property", "Quoted per scope"] }
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: [
+            "Guest WiFi-focused scopes",
+            "Per-venue or multi-venue",
+            "Quoted per layout & capacity needs",
+            "Hardware refresh planning"
+          ]
+        },
+        {
+          name: "Tier 1",
+          badge: "ESSENTIAL",
+          price: "R6,000 – R9,000 / month",
+          includes: [
+            "Guest Wi-Fi setup & management",
+            "Access Point (AP) tuning for coverage & stability",
+            "Secure guest vs staff network separation",
+            "Internet uptime monitoring",
+            "Basic captive portal (terms & branding)",
+            "Remote support for guest connectivity issues",
+            "Monthly Wi-Fi performance checks"
+          ],
+          bestFor: ["Small hotels", "Guesthouses", "Restaurants", "Lodges"],
+          addons: [
+            "Secondary internet failover",
+            "Guest Wi-Fi analytics & reporting",
+            "CCTV monitoring",
+            "After-hours support",
+            "Branded captive portal upgrades",
+            "Once-off: Wi-Fi site surveys",
+            "Once-off: AP installation & cabling",
+            "Once-off: Network rack upgrades",
+            "Once-off: Firewall replacements",
+            "Once-off: Guest Wi-Fi hardware refreshes"
+          ]
+        },
+        {
+          name: "Tier 2",
+          badge: "MANAGED",
+          price: "R10,000 – R16,000 / month",
+          recommended: true,
+          includes: [
+            "Everything in Tier 1",
+
+            "Coverage planning (room-by-room / seating-area planning)",
+            "Advanced AP tuning (band steering, roaming, load balancing)",
+            "Performance monitoring & optimisation",
+            "Guest experience troubleshooting",
+            "Branded captive portal with usage rules",
+
+            "Full network & firewall management",
+            "Staff device & POS network separation",
+            "Internet redundancy planning",
+            "Priority support response times",
+            "Monthly network health reporting"
+          ],
+          bestFor: ["Busy hotels", "Resorts", "High-footfall venues"],
+          addons: [
+            "Secondary internet failover",
+            "Guest Wi-Fi analytics & reporting",
+            "CCTV monitoring",
+            "After-hours support",
+            "Branded captive portal upgrades",
+            "Once-off: Wi-Fi site surveys",
+            "Once-off: AP installation & cabling",
+            "Once-off: Network rack upgrades",
+            "Once-off: Firewall replacements",
+            "Once-off: Guest Wi-Fi hardware refreshes"
+          ]
+        },
+        {
+          name: "Tier 3",
+          badge: "PREMIUM",
+          price: "R18,000 – R28,000+ / month",
+          includes: [
+            "Everything in Tier 2",
+
+            "Wi-Fi design & capacity planning",
+            "Peak-time performance optimisation",
+            "Real-time monitoring & alerts",
+            "Guest issue escalation handling",
+            "SLA-backed Wi-Fi uptime targets",
+
+            "Advanced cybersecurity monitoring",
+            "POS & payment network protection",
+            "CCTV & access system support",
+            "Multi-site centralised management",
+            "Compliance & audit reporting",
+
+            "After-hours & weekend support",
+            "Dedicated account manager",
+            "Quarterly performance & improvement reviews"
+          ],
+          bestFor: ["Large hotels", "Hospitality groups", "Multi-venue properties"],
+          addons: [
+            "Secondary internet failover",
+            "Guest Wi-Fi analytics & reporting",
+            "CCTV monitoring",
+            "After-hours support",
+            "Branded captive portal upgrades",
+            "Once-off: Wi-Fi site surveys",
+            "Once-off: AP installation & cabling",
+            "Once-off: Network rack upgrades",
+            "Once-off: Firewall replacements",
+            "Once-off: Guest Wi-Fi hardware refreshes"
+          ]
+        }
       ]
     },
 
     medical: {
       title: "Medical",
-      desc: "Secure systems, backups and privacy-first operations — built for reliability, access control and sensible compliance.",
+      desc: "Secure, reliable systems for practices handling sensitive data — backups, access control, and audit-ready IT support (IT scope only).",
       plans: [
-        { name: "Tier 1", badge: "OPTION", price: "R7 000 – R14 000", includes: ["Core stabilisation", "Baseline security", "Backup basics"] },
-        { name: "Tier 2", badge: "BEST FIT", price: "R14 000 – R25 000", includes: ["Monitoring + response", "Improved network segmentation", "Support + documentation"], recommended: true },
-        { name: "Tier 3", badge: "OPTION", price: "R25 000 – R45 000", includes: ["Advanced security layers", "Uptime-first design", "Priority support + reviews"] },
-        { name: "Build Your Own", badge: "OPTION", price: "Custom", includes: ["Choose your stack", "Scale per practice", "Quoted per scope"] }
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: [
+            "Privacy-first scopes",
+            "Select systems & support areas",
+            "Quoted per practice size and risk profile",
+            "Clear IT-only compliance support"
+          ]
+        },
+        {
+          name: "Tier 1",
+          badge: "ESSENTIAL",
+          price: "R6,000 – R9,000 / month",
+          includes: [
+            "Remote IT helpdesk support",
+            "Support for reception & admin PCs",
+            "Practice management software support (system-level)",
+            "Secure network & Wi-Fi setup",
+            "Antivirus & firewall management",
+            "Daily automated backups (onsite or cloud)",
+            "User account & access management",
+            "Incident logging & resolution tracking"
+          ],
+          excludes: ["Advanced security monitoring", "Compliance reporting", "After-hours support"],
+          bestFor: ["Small practices", "Low staff count + sensitive data"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote doctor access",
+            "Backup & DR testing",
+            "CCTV & access system support",
+            "Once-off: Secure network redesigns",
+            "Once-off: Server replacements & upgrades",
+            "Once-off: Backup system installations",
+            "Once-off: Access control & biometric systems",
+            "Once-off: Compliance remediation projects (IT scope)"
+          ]
+        },
+        {
+          name: "Tier 2",
+          badge: "MANAGED",
+          price: "R12,000 – R18,000 / month",
+          recommended: true,
+          includes: [
+            "Everything in Tier 1",
+
+            "Advanced firewall & intrusion protection",
+            "Role-based access control (doctor vs admin)",
+            "Secure remote access for doctors",
+            "Email security & phishing protection",
+
+            "Backup monitoring & restore testing",
+            "Disaster recovery readiness checks",
+            "System uptime monitoring",
+
+            "Vendor & license management",
+            "Priority support response times",
+            "Monthly system health reporting"
+          ],
+          bestFor: ["Busy practices", "Multi-doctor clinics", "Shared facilities"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote doctor access",
+            "Backup & DR testing",
+            "CCTV & access system support",
+            "Once-off: Secure network redesigns",
+            "Once-off: Server replacements & upgrades",
+            "Once-off: Backup system installations",
+            "Once-off: Access control & biometric systems",
+            "Once-off: Compliance remediation projects (IT scope)"
+          ]
+        },
+        {
+          name: "Tier 3",
+          badge: "CLINICAL-GRADE",
+          price: "R20,000 – R30,000+ / month",
+          includes: [
+            "Everything in Tier 2",
+
+            "Advanced cybersecurity monitoring",
+            "Encryption enforcement (data at rest & in transit)",
+            "Secure access auditing & logging",
+            "Staff onboarding/offboarding controls",
+
+            "Multi-layer backup strategy",
+            "Regular restore testing",
+            "Business continuity & downtime planning",
+
+            "POPIA-aligned data handling checks (IT scope)",
+            "Access & activity audit trails",
+            "Incident & breach documentation support",
+            "Compliance & audit reporting (IT scope only)",
+
+            "After-hours & emergency support",
+            "Dedicated account manager",
+            "Quarterly risk & improvement reviews"
+          ],
+          bestFor: ["Medical centres", "Day clinics", "Higher-risk environments"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote doctor access",
+            "Backup & DR testing",
+            "CCTV & access system support",
+            "Once-off: Secure network redesigns",
+            "Once-off: Server replacements & upgrades",
+            "Once-off: Backup system installations",
+            "Once-off: Access control & biometric systems",
+            "Once-off: Compliance remediation projects (IT scope)"
+          ]
+        }
       ]
     },
 
     professional: {
       title: "Professional",
-      desc: "Email, devices, security and managed support — a clean and reliable setup for teams that need stuff to just work.",
+      desc: "Email, devices, security and managed support — designed for teams that need everything to just work, consistently.",
       plans: [
-        { name: "Tier 1", badge: "OPTION", price: "R7 000 – R14 000", includes: ["Core setup + baseline", "Basic endpoint hardening", "Backup essentials"] },
-        { name: "Tier 2", badge: "BEST FIT", price: "R14 000 – R25 000", includes: ["Monitoring + response", "Better WiFi + network tuning", "User + device support"], recommended: true },
-        { name: "Tier 3", badge: "OPTION", price: "R25 000 – R45 000", includes: ["Advanced security layers", "Redundancy + uptime focus", "Priority support + reviews"] },
-        { name: "Build Your Own", badge: "OPTION", price: "Custom", includes: ["Pick what you need", "Scale by team size", "Quoted per scope"] }
+        {
+          name: "Build Your Own",
+          badge: "CUSTOM",
+          price: "Contact Our Team",
+          includes: [
+            "Pick the exact services you need",
+            "Scale by team size",
+            "Quoted per scope",
+            "Ideal for hybrid requirements"
+          ]
+        },
+        {
+          name: "Tier 1",
+          badge: "ESSENTIAL",
+          price: "R4,500 – R7,000 / month",
+          includes: [
+            "Managed business email (setup & support)",
+            "User account & mailbox management",
+            "Support for laptops & desktops",
+            "Remote IT helpdesk support",
+            "Internet & Wi-Fi monitoring",
+            "Basic cybersecurity (antivirus & firewall checks)",
+            "Data backups (critical business data)",
+            "Incident logging & tracking"
+          ],
+          excludes: [
+            "Advanced security",
+            "Device policies",
+            "Compliance reporting",
+            "After-hours support"
+          ],
+          bestFor: ["Small teams (2–10 users)", "Reliable basics"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote work setup",
+            "Advanced backup & DR testing",
+            "Website hosting & maintenance",
+            "Once-off: New office IT setups",
+            "Once-off: Network cabling & Wi-Fi upgrades",
+            "Once-off: Server replacements or cloud migrations",
+            "Once-off: Security remediation projects",
+            "Once-off: Device rollouts"
+          ]
+        },
+        {
+          name: "Tier 2",
+          badge: "MANAGED",
+          price: "R8,000 – R14,000 / month",
+          recommended: true,
+          includes: [
+            "Everything in Tier 1",
+
+            "Advanced email security & anti-phishing",
+            "Shared mailboxes & permissions",
+            "Cloud collaboration setup (Microsoft / Google)",
+
+            "Device setup & lifecycle management",
+            "Secure remote access",
+            "Patch & update management",
+
+            "Advanced firewall & endpoint protection",
+            "Staff vs guest Wi-Fi separation",
+            "Backup monitoring & restore testing",
+
+            "Priority response times",
+            "Vendor & license management",
+            "Monthly system health reporting"
+          ],
+          bestFor: ["Growing teams (5–25 users)", "Daily IT reliance"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote work setup",
+            "Advanced backup & DR testing",
+            "Website hosting & maintenance",
+            "Once-off: New office IT setups",
+            "Once-off: Network cabling & Wi-Fi upgrades",
+            "Once-off: Server replacements or cloud migrations",
+            "Once-off: Security remediation projects",
+            "Once-off: Device rollouts"
+          ]
+        },
+        {
+          name: "Tier 3",
+          badge: "BUSINESS-CRITICAL",
+          price: "R18,000 – R25,000+ / month",
+          includes: [
+            "Everything in Tier 2",
+
+            "Mobile Device Management (MDM)",
+            "Secure device policies",
+            "Staff onboarding & offboarding controls",
+
+            "Advanced cybersecurity monitoring",
+            "Secure access auditing & logs",
+            "Ransomware & breach prevention measures",
+            "Incident response planning",
+
+            "Business continuity & downtime planning",
+            "Multi-layer backup strategy",
+            "Regular restore testing",
+
+            "After-hours & emergency support",
+            "Dedicated account manager",
+            "Quarterly IT & security reviews"
+          ],
+          bestFor: ["Professional firms where downtime = lost revenue", "Security-first environments"],
+          addons: [
+            "Compliance & audit reporting (IT scope only)",
+            "After-hours / emergency support",
+            "Secure remote work setup",
+            "Advanced backup & DR testing",
+            "Website hosting & maintenance",
+            "Once-off: New office IT setups",
+            "Once-off: Network cabling & Wi-Fi upgrades",
+            "Once-off: Server replacements or cloud migrations",
+            "Once-off: Security remediation projects",
+            "Once-off: Device rollouts"
+          ]
+        }
       ]
     }
   };
